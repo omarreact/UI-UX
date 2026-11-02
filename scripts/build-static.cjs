@@ -1,30 +1,53 @@
-// Deterministic static build: first-party assets only. No framework or CDN.
-const { mkdirSync, rmSync, cpSync, copyFileSync, existsSync, readdirSync, readFileSync, writeFileSync } = require('node:fs');
-const { join, resolve } = require('node:path');
-const root = resolve(__dirname, '..');
-const destination = join(root, 'dist');
-rmSync(destination, { recursive: true, force: true });
-mkdirSync(join(destination, 'assets', 'images'), { recursive: true });
-copyFileSync(join(root, 'index.html'), join(destination, 'index.html'));
-const sources = join(root, 'assets', 'images');
-if (!existsSync(sources)) throw new Error('Missing repository-owned image directory');
-const images = readdirSync(sources).filter(name => name.endsWith('.webp'));
-if (images.length !== 13) throw new Error('Expected 13 optimized WebP images; found ' + images.length);
-for (const image of images) copyFileSync(join(sources, image), join(destination, 'assets', 'images', image));
-const html = readFileSync(join(destination, 'index.html'), 'utf8');
-if (/images\.unsplash\.com|cdn\.tailwindcss\.com|fonts\.googleapis\.com/i.test(html))
-  throw new Error('External CDN reference found');
-for (const url of html.matchAll(/\/(?:assets\/images)\/(photo-[a-z0-9-]+\.webp)/g)) {
-  if (!existsSync(join(destination, 'assets', 'images', url[1]))) throw new Error('Missing referenced image ' + url[1]);
-}
-writeFileSync(join(destination, '_headers'), [
-  '/*',
-  '  X-Content-Type-Options: nosniff',
-  '  Referrer-Policy: strict-origin-when-cross-origin',
-  '  X-Frame-Options: DENY',
-  '',
-  '/assets/images/*',
-  '  Cache-Control: public, max-age=31536000, immutable',
-  ''
-].join('\n'));
-console.log('Built static site with ' + images.length + ' self-hosted images.');
+// Native dependency-free site generator. Shared components and original structured content.
+(function buildSite(){
+  "use strict";
+  const fs=require("node:fs"),path=require("node:path");
+  const root=path.resolve(__dirname,".."),dist=path.join(root,"dist");
+  const read=p=>fs.readFileSync(path.join(root,p),"utf8");
+  const make=p=>fs.mkdirSync(p,{recursive:true});
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  fs.rmSync(dist,{recursive:true,force:true});
+  for(const folder of ["assets/images","assets/css","assets/js"])make(path.join(dist,folder));
+  const images=fs.readdirSync(path.join(root,"assets/images")).filter(x=>x.endsWith(".webp"));
+  if(images.length!==13)throw Error("Expected 13 WebP photographs, found "+images.length);
+  for(const image of images)fs.copyFileSync(path.join(root,"assets/images",image),path.join(dist,"assets/images",image));
+  for(const [source,target] of [["src/styles/site.css","assets/css/site.css"],["src/styles/pages.css","assets/css/pages.css"],["src/scripts/site.js","assets/js/site.js"]])fs.copyFileSync(path.join(root,source),path.join(dist,target));
+  const layout=read("src/layout.html"),nav=read("src/partials/nav.html"),footer=read("src/partials/footer.html"),cta=read("src/partials/cta.html");
+  const concepts=JSON.parse(read("src/content/concepts.json")),articles=JSON.parse(read("src/content/articles.json"));
+  const conceptCards=concepts.map(x=>'<article class="showcase-card" data-category="'+esc(x.category)+'"><a class="showcase-image" href="'+esc(x.url)+'" aria-label="Explore '+esc(x.name)+' concept"><img loading="lazy" decoding="async" src="/assets/images/'+esc(x.image)+'" alt="Visual inspiration for the '+esc(x.name)+' concept"></a><div class="showcase-body"><span>'+esc(x.eyebrow)+'</span><h3><a href="'+esc(x.url)+'">'+esc(x.name)+'</a></h3><p>'+esc(x.description)+'</p><a href="'+esc(x.url)+'" class="mini-btn">Explore concept ↗</a></div></article>').join("\n");
+  const articleCards=articles.map(x=>'<article class="showcase-card article-card" data-search-text="'+esc([x.title,x.category,x.summary].join(" ").toLowerCase())+'"><a class="showcase-image" href="'+esc(x.url)+'" aria-label="Read '+esc(x.title)+'"><img loading="lazy" decoding="async" src="/assets/images/'+esc(x.image)+'" alt="Editorial visual for '+esc(x.title)+'"></a><div class="showcase-body"><span>'+esc(x.category)+' · '+esc(x.readingTime)+'</span><h3><a href="'+esc(x.url)+'">'+esc(x.title)+'</a></h3><p>'+esc(x.summary)+'</p><a class="mini-btn" href="'+esc(x.url)+'">Read article ↗</a></div></article>').join("\n");
+  const configs=[
+    ["home","/","Softly Solutions — Smarter Digital. Stronger Brands.","Independent creative studio design showcase with original digital concepts, editorial stories, and reusable visual systems."],
+    ["services","/services/","Services — Softly Solutions","Discover brand strategy, digital design, development, workflows, and experience optimization.","Design that<br><em>works harder.</em>","Services / Capabilities","Connected thinking from first idea to a memorable digital experience."],
+    ["work","/work/","Concepts — Softly Solutions","Explore six original and illustrative product, commerce, editorial, and brand design concepts.","Ideas made<br><em>visible.</em>","Showcase / Concepts","Original ideas with clear intent, not commissioned client case studies."],
+    ["about","/about/","The Studio — Softly Solutions","Discover the independent visual design philosophy behind Softly Solutions.","Creative thinking.<br><em>Clear intention.</em>","Studio / About","A thoughtful visual identity that travels consistently across the entire website."],
+    ["process","/process/","Process — Softly Solutions","Follow a practical six-step design and development workflow.","From question<br><em>to clarity.</em>","Approach / Process","A transparent process centered on user needs and deliberate choices."],
+    ["insights","/insights/","Insights — Softly Solutions","Original notes on brand-led growth, better digital experiences, and thoughtful automation.","Ideas worth<br><em>reading.</em>","Journal / Insights","Thoughtful writing for building clearer digital experiences."],
+    ["contact","/contact/","Contact — Softly Solutions","Prepare a design inquiry and contact the studio showcase team.","Let's make<br><em>something matter.</em>","Contact / Start a Project","Share your idea, the audience you serve, and the outcome that matters."],
+    ["design-system","/design-system/","Design System — Softly Solutions","Explore the palette, typography, interface components, and reusable design patterns.","One system.<br><em>Many expressions.</em>","Showcase / Design System","Explore the components and decisions behind the complete visual language."]
+  ].map(x=>({id:x[0],route:x[1],title:x[2],description:x[3],heroTitle:x[4],heroLabel:x[5],heroText:x[6],source:x[0]}));
+  for(const x of concepts)configs.push({id:"work",route:x.url,title:x.name+" Concept — Softly Solutions",description:x.description,heroTitle:esc(x.name)+"<br><em>"+esc(x.subtitle)+"</em>",heroLabel:esc(x.eyebrow),heroText:"An original illustrative concept exploring a particular design challenge.",body:
+    '<section class="page-section"><div class="wrap"><div class="reading-meta"><span>Illustrative concept</span><span>'+esc(x.category)+'</span></div><div class="detail-layout"><div class="detail-main"><img class="detail-image" src="/assets/images/'+esc(x.image)+'" alt="Visual inspiration for '+esc(x.name)+'" decoding="async"><span class="eyebrow-detail">The idea</span><h2>'+esc(x.subtitle)+'</h2><p class="article-intro">'+esc(x.description)+'</p><h2>The challenge</h2><p>'+esc(x.challenge)+'</p><h2>The design approach</h2><p>'+esc(x.solution)+'</p><h2>Experience highlights</h2><div class="detail-feature-grid">'+x.features.map((t,i)=>'<div class="detail-feature"><strong>0'+(i+1)+'</strong>'+esc(t)+'</div>').join("")+'</div><div class="aside-note"><strong>Independent concept</strong><span>This is a design exploration, not a commissioned project or verified business result.</span></div><div class="related-links"><a class="light-btn" href="/work/">← All concepts</a><a class="orange-btn" href="/contact/?service=Custom%20Design%20Concept">Request a similar direction ↗</a></div></div><aside class="detail-aside"><span>Concept overview</span><h3>'+esc(x.name)+'</h3><p>Designed for '+esc(x.audience)+'.</p><a class="orange-btn" href="/contact/?service=Custom%20Design%20Concept">Discuss this concept</a></aside></div></div></section>{{CTA}}'
+  });
+  for(const x of articles)configs.push({id:"insights",route:x.url,title:x.title+" — Softly Solutions",description:x.summary,heroTitle:esc(x.title),heroLabel:esc(x.category)+" / Insights",heroText:"An original editorial note on digital design and modern product thinking.",body:
+    '<article class="page-section article-detail"><div class="wrap"><div class="reading-meta"><span>'+esc(x.category)+'</span><span>'+esc(x.readingTime)+'</span><span>Original studio note</span></div><div class="detail-layout"><div class="detail-main"><img class="detail-image" src="/assets/images/'+esc(x.image)+'" alt="Editorial visual" decoding="async"><p class="article-intro">'+esc(x.summary)+'</p>'+x.sections.map(s=>'<section><h2>'+esc(s.heading)+'</h2>'+s.paragraphs.map(p=>'<p>'+esc(p)+'</p>').join("")+'</section>').join("")+'<div class="related-links"><a class="light-btn" href="/insights/">← All insights</a><a class="orange-btn" href="/contact/">Start a conversation ↗</a></div></div><aside class="detail-aside"><span>Reading note</span><h3>A moment for reflection</h3><p>Original editorial content for this independent, reusable design showcase.</p><a class="mini-btn" href="/design-system/">Explore our design system ↗</a></aside></div></div></article>{{CTA}}'
+  });
+  configs.push({id:"not-found",route:"/404.html",title:"Page not found — Softly Solutions",description:"Return to the Softly Solutions design showcase.",heroTitle:"Lost your way?<br><em>We've got you.</em>",heroLabel:"404 / Not found",heroText:"The link may have moved, but there is still plenty to discover.",body:'<section class="page-section"><div class="wrap center-head"><h2 class="section-title">More to explore.</h2><p>This page does not exist. Our services, concepts, and stories are one click away.</p><div class="cta-actions"><a class="orange-btn" href="/">Back home</a><a class="light-btn" href="/work/">Explore concepts</a></div></div></section>'});
+  for(const p of configs){
+    let body=p.body||read("src/pages/"+p.source+".html");
+    body=body.replaceAll("{{CONCEPT_GRID}}",conceptCards).replaceAll("{{ARTICLE_GRID}}",articleCards).replaceAll("{{CTA}}",cta);
+    if(p.id==="home")body=body.replace(/href="#contact"/g,'href="/contact/"').replace(/href="#work"/g,'href="/work/"');
+        const hero=p.id==="home"?read("src/partials/hero-home.html"):'<div class="inner-hero-copy"><span class="pill dark">'+p.heroLabel+'</span><h1>'+p.heroTitle+'</h1><p>'+esc(p.heroText)+'</p><div class="inner-hero-foot"><a href="/work/">Explore concepts ↗</a><a href="/contact/">Start a project ↗</a></div></div>';
+    let navbar=nav.replace('data-nav="'+p.id+'"','data-nav="'+p.id+'" aria-current="page"');
+    let html=layout;
+    const params={"{{TITLE}}":esc(p.title),"{{DESCRIPTION}}":esc(p.description),"{{CANONICAL}}":"https://agency.pincodeit.com"+p.route,"{{PAGE_ID}}":p.id,"{{HERO_CLASS}}":p.id==="home"?"":"hero-inner","{{NAV}}":navbar,"{{HERO}}":hero,"{{BODY}}":body,"{{FOOTER}}":footer};
+    for(const [key,value] of Object.entries(params))html=html.replaceAll(key,()=>value);
+    if(/\{\{[^}]+\}\}/.test(html))throw Error("Unresolved layout variable in "+p.route);
+    const target=p.route==="/"?path.join(dist,"index.html"):p.route==="/404.html"?path.join(dist,"404.html"):path.join(dist,p.route.slice(1),"index.html");
+    make(path.dirname(target));fs.writeFileSync(target,html);
+  }
+  fs.writeFileSync(path.join(dist,"robots.txt"),"User-agent: *\nAllow: /\nSitemap: https://agency.pincodeit.com/sitemap.xml\n");
+  fs.writeFileSync(path.join(dist,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+configs.filter(x=>x.id!=="not-found").map(x=>'<url><loc>https://agency.pincodeit.com'+x.route+'</loc></url>').join("")+'</urlset>');
+  fs.writeFileSync(path.join(dist,"_headers"),["/*","  X-Content-Type-Options: nosniff","  Referrer-Policy: strict-origin-when-cross-origin","  X-Frame-Options: DENY","","/assets/css/*","  Cache-Control: public, max-age=300","","/assets/js/*","  Cache-Control: public, max-age=300","","/assets/images/*","  Cache-Control: public, max-age=86400",""].join("\n"));
+  console.log("Built "+configs.length+" routes and "+images.length+" original first-party assets.");
+})();

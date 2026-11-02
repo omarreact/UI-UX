@@ -214,3 +214,17 @@
 @media (prefers-reduced-motion:reduce) {
   .offering-card,.showcase-card,.showcase-image img,.swatch-color {transition:none!important;}
 }
+
+/* Mark the current top-level destination across server-built pages. */
+.nav-links a[aria-current="page"] { color:#fff; }
+.nav-links a[aria-current="page"]::after { transform:scaleX(1); }
+.nav-links a[aria-current="page"]:hover { color:#ffb783; }
+@media (max-width:900px) {
+  .nav-links.is-open a[aria-current="page"] { background:rgba(255,127,67,.18); color:#fff; }
+  .nav-links.is-open a[aria-current="page"]::after { display:none; }
+}
+
+/* Keep compact mobile navigation; the project CTA appears inside the expanded menu. */
+@media (max-width: 900px) {
+  nav > .nav-cta { display: none !important; }
+}

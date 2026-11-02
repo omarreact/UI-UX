@@ -1397,27 +1397,6 @@
         .back-to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
         .back-to-top:hover { background: #e96b37; }
         .quote-symbol { font-family: Georgia, serif; font-size: 60px; line-height: 1; padding-top: 16px; }
-        .insight-open { cursor: pointer; border: 0; font-family: inherit; }
-        .insight-dialog {
-            width: min(680px, calc(100vw - 28px)); max-height: min(85dvh, 750px);
-            border: 1px solid #ecd9c9; border-radius: 25px; padding: 0;
-            color: #211915; background: #fffcf7;
-            box-shadow: 0 30px 110px rgba(19,9,6,.3);
-        }
-        .insight-dialog::backdrop { background: rgba(15,7,6,.7); backdrop-filter: blur(6px); }
-        .insight-dialog-inner { padding: clamp(22px,5vw,42px); }
-        .insight-dialog-top { display:flex; align-items:center; justify-content:space-between; gap:16px; }
-        .insight-close {
-            display:grid; place-items:center; width:44px; height:44px; border:1px solid #eaded2;
-            border-radius:50%; background: #fff7ef; color:#46281d;
-            font-size:28px; cursor:pointer; line-height:1;
-        }
-        .insight-close:hover { background:#ffe9d6; }
-        .insight-dialog h2 { margin: 18px 0 16px; font-size: clamp(29px, 5vw, 42px); line-height:1.07; letter-spacing:-.06em; text-wrap:balance; }
-        .insight-dialog-body { color:#66584e; font-size:15px; line-height:1.8; }
-        .insight-dialog-body p { margin: 0 0 16px; }
-        .insight-dialog-foot { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
-        .insight-done { cursor:pointer; font-family:inherit; }
         @media (max-width: 900px) {
             .hero { min-height: min(760px, max(660px, 90svh)); }
             .nav-links.is-open a { min-height: 44px; display:flex; align-items:center; }
@@ -1454,7 +1433,6 @@
             }
         }
         @media (prefers-reduced-motion: reduce) {
-            .insight-dialog::backdrop { backdrop-filter:none; }
             .scroll-progress { display:none; }
             .back-to-top { transition:none; }
         }
