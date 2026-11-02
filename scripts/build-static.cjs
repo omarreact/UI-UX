@@ -54,6 +54,6 @@
   }
   fs.writeFileSync(path.join(dist,"robots.txt"),"User-agent: *\nAllow: /\nSitemap: https://agency.pincodeit.com/sitemap.xml\n");
   fs.writeFileSync(path.join(dist,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+configs.filter(x=>x.id!=="not-found").map(x=>'<url><loc>https://agency.pincodeit.com'+x.route+'</loc></url>').join("")+'</urlset>');
-  fs.writeFileSync(path.join(dist,"_headers"),["/*","  X-Content-Type-Options: nosniff","  Referrer-Policy: strict-origin-when-cross-origin","  X-Frame-Options: DENY","","/assets/*","  Cache-Control: public, max-age=31536000, immutable",""].join("\n"));
+  fs.writeFileSync(path.join(dist,"_headers"),["/*","  X-Content-Type-Options: nosniff","  Referrer-Policy: strict-origin-when-cross-origin","  X-Frame-Options: DENY","","/assets/css/*","  Cache-Control: public, max-age=300","","/assets/js/*","  Cache-Control: public, max-age=300","","/assets/images/*","  Cache-Control: public, max-age=86400",""].join("\n"));
   console.log("Built "+configs.length+" routes and "+images.length+" original first-party assets.");
 })();

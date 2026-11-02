@@ -1,59 +1,82 @@
-# Softly Solutions — Agency Landing Page
+# Softly Solutions — Independent Multi-page Design Showcase
 
-A responsive, static agency website using **HTML5, advanced native CSS, and vanilla JavaScript**, deployed through **Cloudflare Workers Static Assets**.
+A standalone, responsive agency-style website demonstrating a complete reusable design language. **Built solely from this repository:** no code, branding, dependencies, or components are reused from other projects.
 
-- Website: https://agency.pincodeit.com/
-- Source: https://github.com/omarreact/UI-UX
-- Cloudflare Worker: `pincode-agency`
-- Production branch: `main`
-- Content: `index.html`
-- Photography: `assets/images/*.webp` (13 first-party WebP images)
+**Production:** https://agency.pincodeit.com/  
+**Stack:** HTML5 · advanced CSS3 (Flexbox, Grid, custom properties, responsive layout) · modern ES6+ vanilla JavaScript · Cloudflare Workers Static Assets
 
-## Local build
+## Pages
 
-Requires Node.js 20+; no npm install or framework dependencies.
+| Section | Clean URL |
+|---|---|
+| Home | `/` |
+| Services | `/services/` |
+| Concepts | `/work/` |
+| The Studio | `/about/` |
+| Process | `/process/` |
+| Insights | `/insights/` |
+| Contact | `/contact/` |
+| Design System | `/design-system/` |
 
-```sh
-node scripts/build-static.cjs
-node scripts/validate-site.cjs
+Includes **six independent illustrative concept detail pages**, **three complete original article pages**, and a custom 404 page: **18 generated HTML routes** in total.
+
+## Source structure
+
+```text
+src/
+  layout.html              Shared semantic HTML document template
+  partials/                Navigation, footer, CTA, dialog, original hero
+  pages/                   Each main page's content markup
+  content/                 Independent portfolio concepts and articles (JSON)
+  styles/                  site.css + pages.css, both first-party
+  scripts/                 site.js, progressive enhancement (ES6+)
+assets/images/             13 optimized, self-hosted WebP photographs
+scripts/
+  build-static.cjs         Dependency-free static page generator
+  validate-site.cjs        All-route build validation
+  dev-server.cjs           Dependency-free local preview server
+tests/                     Playwright browser smoke tests
+wrangler.jsonc             Cloudflare Workers Static Assets configuration
+dist/                      Generated output, not committed
 ```
 
-This creates `dist/` with `index.html`, all optimized images, and static response headers.
+The original homepage's visual identity was preserved and extended across every destination. Shared header, footer, CTA, metadata, and page layouts are generated at build time, ensuring that navigation is available even when JavaScript is disabled. Dynamic interactions use standard browser APIs only.
 
-## Responsive browser QA
+## Run locally
 
-The `Responsive UI smoke checks` GitHub Actions workflow checks the build and runs Chromium interaction tests at **320, 375, 430, 768, 1024, and 1440px**. Checks cover overflow, accessible navigation, FAQ state, Insights dialogs, and JavaScript runtime errors.
+Requires Node.js 20+; **no `npm install`** is needed for building or serving the site.
 
-Source: `tests/responsive-ui.smoke.cjs`. The Playwright dependency is only used for CI testing; it is never delivered to visitors.
+```bash
+node scripts/build-static.cjs
+node scripts/validate-site.cjs
+node scripts/dev-server.cjs
+```
 
-## Cloudflare Workers Builds
+Then open http://127.0.0.1:4173/.
 
-Cloudflare Builds is connected to `omarreact/UI-UX`, branch `main`.
+## Functionality
 
-| Setting | Value |
-|---|---|
-| Build command | `node scripts/build-static.cjs && node scripts/validate-site.cjs` |
-| Deploy command | `npx --yes wrangler@4.148.0 deploy` |
-| Wrangler config | `wrangler.jsonc` |
-| Output directory | `dist/` |
-| Production Worker | `pincode-agency` |
+- Responsive navigation with an accessible mobile menu and current-page indicator
+- Concept category filters and article search with accessible result counts
+- Working article and concept detail navigation
+- FAQ accordion, back-to-top, keyboard focus, and reduced-motion support
+- Contact inquiry form with native validation and clipboard option; **prepares a message in your email client**, rather than claiming to send/store it through an unconfigured backend
+- Interactive design-token palette for inspecting/copying colors
+- Fully local CSS, JS, and image delivery with no frontend CDN requirements
+- Per-page metadata, canonical URLs, robots.txt, sitemap.xml, and 404
 
-If an update is not triggering Cloudflare Builds automatically, confirm the **Cloudflare Workers & Pages GitHub App** has access to the `omarreact/UI-UX` repository at https://github.com/settings/installations. Automatic builds require GitHub event access, not merely a saved repository connection. A manual build can also be started from **Cloudflare → Workers & Pages → pincode-agency → Deployments / Builds**.
+**Content integrity:** All concepts are explicitly labeled illustrative. The site does not claim fabricated client projects, metrics, testimonials, or case-study results. Softly Solutions is a visual design-showcase identity and may be adapted for an approved client brief.
 
-The older GitHub Pages `CNAME` file is legacy metadata; **Cloudflare Workers** serves the custom production domain.
+## Quality and deployments
 
-## Content verification
+Cloudflare Workers Builds is connected to the repository's `main` branch, with automatic GitHub push deployment. The build command is:
 
-Portfolio examples are labeled **illustrative concepts** rather than completed client engagements. Testimonials and numerical marketing claims were removed because independently verifiable business evidence was not supplied.
+```bash
+node scripts/build-static.cjs && node scripts/validate-site.cjs
+```
 
-Contact requests point to `admin@pincodeit.com`. Before representing the site as a separate real agency, confirm the **Softly Solutions** name and replace illustrative concepts with real, authorized work.
+Deploy command: `npx --yes wrangler@4.148.0 deploy`.
 
-## Deployment safety
+The GitHub Actions workflow also executes Playwright browser checks across **320, 375, 430, 768, 1024, and 1440px** on all primary pages, plus the detail pages and main interactions. Before merging significant changes, confirm the pull request's checks pass.
 
-The build script fails if any of the 13 optimized images is missing or a prohibited CDN dependency is introduced. The validation script checks internal anchors, duplicate IDs, JavaScript syntax, and disclosures. Cloudflare version history provides rollback.
-
-Do not commit tokens, secret keys, credentials, or deployment-hook URLs.
-
-## GitHub push delivery check
-
-Changes pushed to `main` are intended to start the Cloudflare Workers Builds production trigger. This repository includes automated responsive and static validation checks; before announcing a new production release, confirm both GitHub checks and the matching Cloudflare build/deployment status. See Cloudflare Workers Builds for the source commit and deployment version.
+No credentials or API secrets belong in the repository. The root `index.html` is a compatibility redirect for former GitHub Pages visitors; generated HTML in `dist/` is the only production output.

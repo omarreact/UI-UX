@@ -4,13 +4,19 @@ on:
   push:
     branches: [main]
     paths:
-      - 'index.html'
+      - 'src/**'
+      - 'scripts/**'
+      - 'assets/**'
       - 'tests/**'
+      - 'wrangler.jsonc'
       - '.github/workflows/responsive-ui.yml'
   pull_request:
     paths:
-      - 'index.html'
+      - 'src/**'
+      - 'scripts/**'
+      - 'assets/**'
       - 'tests/**'
+      - 'wrangler.jsonc'
       - '.github/workflows/responsive-ui.yml'
   workflow_dispatch:
 
