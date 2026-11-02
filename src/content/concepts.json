@@ -1,0 +1,116 @@
+[
+  {
+    "slug": "novahire",
+    "name": "NovaHire",
+    "subtitle": "Human-centered hiring workspace",
+    "category": "Platform",
+    "eyebrow": "Product concept · Recruiting",
+    "image": "photo-1518005020951-eccb494ad742.webp",
+    "description": "A clearer way for hiring teams to understand candidates, move through decisions, and stay aligned.",
+    "challenge": "Recruiting tools often scatter notes, pipeline stages, and feedback across several screens. This concept explores a focused interface that keeps the next decision obvious.",
+    "solution": "A compact candidate pipeline, accessible review states, and a single candidate workspace for shared context.",
+    "features": [
+      "Candidate pipeline with explicit status labels",
+      "Structured feedback and comparison",
+      "Responsive dashboards for fast reviews"
+    ],
+    "audience": "Recruiting teams and talent-focused startups",
+    "palette": "warm",
+    "url": "/work/novahire/"
+  },
+  {
+    "slug": "retailsense",
+    "name": "RetailSense",
+    "subtitle": "Readable commerce analytics",
+    "category": "Commerce",
+    "eyebrow": "Dashboard concept · Commerce",
+    "image": "photo-1556742502-ec7c0e9f34b1.webp",
+    "description": "A data-rich retail dashboard that keeps everyday decisions understandable for store operators.",
+    "challenge": "Busy store teams need a quick view of what matters without navigating dense reports or interpreting unclear charts.",
+    "solution": "A purposeful information hierarchy with product performance, daily activity, and stock-level signals.",
+    "features": [
+      "Operational overview with meaningful hierarchy",
+      "Product and category performance patterns",
+      "Clear inventory attention states"
+    ],
+    "audience": "Independent retailers and commerce teams",
+    "palette": "orange",
+    "url": "/work/retailsense/"
+  },
+  {
+    "slug": "finvision",
+    "name": "FinVision",
+    "subtitle": "Calm financial planning interface",
+    "category": "Finance",
+    "eyebrow": "Application concept · Finance",
+    "image": "photo-1551288049-bebda4e38f71.webp",
+    "description": "A planning and forecasting interface designed around clarity, confidence, and control.",
+    "challenge": "Financial information can feel overwhelming when important assumptions and actions are buried in complex tables.",
+    "solution": "An approachable dashboard with readable trends, comparison views, and plain-language summaries.",
+    "features": [
+      "Scenario comparisons and trend cards",
+      "Accessible data summaries and labels",
+      "Modular views for teams and individuals"
+    ],
+    "audience": "Financial planning and operations teams",
+    "palette": "dark",
+    "url": "/work/finvision/"
+  },
+  {
+    "slug": "atelier",
+    "name": "Atelier",
+    "subtitle": "Editorial identity for a design practice",
+    "category": "Brand",
+    "eyebrow": "Website concept · Creative studio",
+    "image": "photo-1558655146-d09347e92766.webp",
+    "description": "A visually expressive editorial website for a creative practice with an unmistakable point of view.",
+    "challenge": "Creative studios need to communicate personality without losing usability or clarity of services.",
+    "solution": "Expressive type, restrained motion, generous image space, and an intentional contact journey.",
+    "features": [
+      "Editorial typography and flexible grids",
+      "Portfolio-first content architecture",
+      "Elegant transitions with reduced-motion support"
+    ],
+    "audience": "Independent studios and creative brands",
+    "palette": "warm",
+    "url": "/work/atelier/"
+  },
+  {
+    "slug": "northstar",
+    "name": "Northstar",
+    "subtitle": "A modern knowledge platform",
+    "category": "Platform",
+    "eyebrow": "Platform concept · Education",
+    "image": "photo-1520607162513-77705c0f0d4a.webp",
+    "description": "An approachable digital learning experience with a focus on discovery and continued progress.",
+    "challenge": "Course catalogs can make exploration difficult when too many competing elements demand attention.",
+    "solution": "A calm course discovery flow, helpful topic filters, and clearly visible learning pathways.",
+    "features": [
+      "Simple course discovery and categorization",
+      "Progress and saved-content patterns",
+      "Accessible reading-focused content"
+    ],
+    "audience": "Training businesses and independent educators",
+    "palette": "cream",
+    "url": "/work/northstar/"
+  },
+  {
+    "slug": "fieldnotes",
+    "name": "Fieldnotes",
+    "subtitle": "Content-led publication experience",
+    "category": "Brand",
+    "eyebrow": "Editorial concept · Publication",
+    "image": "photo-1485827404703-89b55fcc595e.webp",
+    "description": "An independent publication concept with beautiful reading layouts and discoverable stories.",
+    "challenge": "Editorial websites need to balance visual identity with fast navigation and uninterrupted reading.",
+    "solution": "A modular article system, readable text rhythm, and lightweight content discovery.",
+    "features": [
+      "Long-form reading templates",
+      "Topic exploration and content collections",
+      "Minimal interaction overhead"
+    ],
+    "audience": "Editorial teams and content brands",
+    "palette": "cream",
+    "url": "/work/fieldnotes/"
+  }
+]

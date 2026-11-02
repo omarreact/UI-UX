@@ -1,0 +1,98 @@
+[
+  {
+    "slug": "brand-led-growth",
+    "category": "Strategy",
+    "title": "Brand-Led Growth Begins With Clarity",
+    "summary": "How a distinct point of view makes digital experiences feel more useful and more memorable.",
+    "image": "photo-1557804506-669a67965ba0.webp",
+    "readingTime": "4 min read",
+    "url": "/insights/brand-led-growth/",
+    "sections": [
+      {
+        "heading": "Start with the promise",
+        "paragraphs": [
+          "A strong brand does not need to shout. It makes a specific promise to a specific audience, and then it follows through with a consistent experience.",
+          "Before choosing a typeface or launching a campaign, write down the customer problem you solve, the outcome you support, and what makes your approach meaningfully different."
+        ]
+      },
+      {
+        "heading": "Design for recognition",
+        "paragraphs": [
+          "Your visual system should create recognition, not decoration for its own sake. Choose a handful of reliable rules for typography, spacing, photography, and interaction.",
+          "Apply those rules to the moments customers see most often: navigation, key messages, product interactions, and follow-up communication."
+        ]
+      },
+      {
+        "heading": "Turn consistency into momentum",
+        "paragraphs": [
+          "Measure whether people understand your offer and can complete the next step. Revisit the language and layouts where people hesitate.",
+          "Brand-led growth is not a one-time visual exercise. It is the discipline of keeping a clear promise through every digital interaction."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "digital-experience",
+    "category": "Experience",
+    "title": "The Small Decisions Behind Better Digital Experiences",
+    "summary": "A practical look at navigation, hierarchy, performance, and accessibility.",
+    "image": "photo-1520607162513-77705c0f0d4a.webp",
+    "readingTime": "5 min read",
+    "url": "/insights/digital-experience/",
+    "sections": [
+      {
+        "heading": "Remove ambiguity first",
+        "paragraphs": [
+          "A great interface helps people know where they are, what they can do next, and what will happen when they take action.",
+          "Clear labels, predictable navigation, and visible feedback solve more frustration than extra animation or ornament."
+        ]
+      },
+      {
+        "heading": "Treat performance as a design decision",
+        "paragraphs": [
+          "Fast image delivery, sensible component boundaries, and minimal script execution make an interface feel more direct.",
+          "Performance affects how quickly someone sees value. Measure mobile devices and slower connections, not just a desktop development machine."
+        ]
+      },
+      {
+        "heading": "Design with everyone in mind",
+        "paragraphs": [
+          "Readable contrast, keyboard support, touch-friendly controls, and reduced-motion preferences are foundations—not add-ons.",
+          "Testing real journeys across screen sizes reveals the points where design systems need to become more flexible."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "automation-with-intent",
+    "category": "Technology",
+    "title": "Build Automation Around People, Not Hype",
+    "summary": "Where automation helps, where it creates friction, and how to design helpful workflows.",
+    "image": "photo-1485827404703-89b55fcc595e.webp",
+    "readingTime": "4 min read",
+    "url": "/insights/automation-with-intent/",
+    "sections": [
+      {
+        "heading": "Map the work before the tool",
+        "paragraphs": [
+          "Start with an observed workflow: the repeated handoffs, slow approvals, or duplicated data entry that get in the way.",
+          "Choose a clear outcome, identify the people affected, and build only the automation needed to support that result."
+        ]
+      },
+      {
+        "heading": "Keep people in control",
+        "paragraphs": [
+          "Good automation makes exceptions visible, explains what happened, and provides a simple route to correction.",
+          "Especially for consequential decisions, transparent human oversight is more valuable than an impressive-looking black box."
+        ]
+      },
+      {
+        "heading": "Improve in small loops",
+        "paragraphs": [
+          "Prototype a narrow workflow, gather feedback, and adjust before extending it to more teams.",
+          "A useful system gets simpler over time because it is informed by actual behavior, not just feature requests."
+        ]
+      }
+    ]
+  }
+]
