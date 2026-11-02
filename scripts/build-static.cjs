@@ -37,7 +37,7 @@
     let body=p.body||read("src/pages/"+p.source+".html");
     body=body.replaceAll("{{CONCEPT_GRID}}",conceptCards).replaceAll("{{ARTICLE_GRID}}",articleCards).replaceAll("{{CTA}}",cta);
     if(p.id==="home")body=body.replace(/href="#contact"/g,'href="/contact/"').replace(/href="#work"/g,'href="/work/"');
-        const hero=p.id==="home"?read("src/partials/hero-home.html"):'<div class="inner-hero-copy"><span class="pill dark">'+p.heroLabel+'</span><h1>'+p.heroTitle+'</h1><p>'+esc(p.heroText)+'</p><div class="inner-hero-foot"><a href="/work/">Explore concepts ↗</a><a href="/contact/">Start a project ↗</a></div></div>';
+        const hero=p.id==="home"?read("src/partials/hero-home.html"):p.id==="services"?read("src/partials/hero-services.html"):'<div class="inner-hero-copy"><span class="pill dark">'+p.heroLabel+'</span><h1>'+p.heroTitle+'</h1><p>'+esc(p.heroText)+'</p><div class="inner-hero-foot"><a href="/work/">Explore concepts ↗</a><a href="/contact/">Start a project ↗</a></div></div>';
     let navbar=nav.replace('data-nav="'+p.id+'"','data-nav="'+p.id+'" aria-current="page"');
     let html=layout;
     const params={"{{TITLE}}":esc(p.title),"{{DESCRIPTION}}":esc(p.description),"{{CANONICAL}}":"https://agency.pincodeit.com"+p.route,"{{PAGE_ID}}":p.id,"{{HERO_CLASS}}":p.id==="home"?"":"hero-inner","{{NAV}}":navbar,"{{HERO}}":hero,"{{BODY}}":body,"{{FOOTER}}":footer};
