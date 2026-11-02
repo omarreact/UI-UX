@@ -62,6 +62,7 @@
        await page.locator("#project-message").fill("I would like to discuss a custom design concept for a future website.");
        assert(await form.evaluate(el=>el.checkValidity()),"Completed form incorrectly invalid");
        await page.locator("[data-copy-inquiry]").click();
+       await page.waitForFunction(() => (document.querySelector("#form-feedback")?.textContent || "").length > 15);
        assert((await page.locator("#form-feedback").innerText()).length>15,"No contact form feedback");
       }
       if(route==="/process/" && (width===375||width===1440)){
