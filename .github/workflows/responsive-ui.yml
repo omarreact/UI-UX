@@ -37,6 +37,9 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
+      - name: Build first-party website assets
+        run: node scripts/build-static.cjs
+
       - name: Test responsive layouts and interactions
         run: node tests/responsive-ui.smoke.cjs
 
