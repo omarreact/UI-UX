@@ -197,6 +197,7 @@ if (projectForm) {
             if (feedback) feedback.textContent = "Complete the required fields before copying your inquiry.";
             return;
         }
+        if (feedback) feedback.textContent = "Preparing a copy of your inquiry…";
         try {
             if (!navigator.clipboard || !navigator.clipboard.writeText) throw Error("Clipboard unavailable");
             await navigator.clipboard.writeText(message);
