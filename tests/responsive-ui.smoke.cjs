@@ -73,6 +73,7 @@
       }
       if(route==="/design-system/" && width===375){
        await page.locator("[data-copy-color]").first().click();
+       await page.waitForFunction(() => (document.querySelector("[data-color-status]")?.textContent || "").includes("#"));
        assert((await page.locator("[data-color-status]").innerText()).includes("#"),"Color copy feedback missing");
       }
       checks++;
