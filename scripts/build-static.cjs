@@ -12,7 +12,7 @@
   if(images.length!==13)throw Error("Expected 13 WebP photographs, found "+images.length);
   for(const image of images)fs.copyFileSync(path.join(root,"assets/images",image),path.join(dist,"assets/images",image));
   for(const [source,target] of [["src/styles/site.css","assets/css/site.css"],["src/styles/pages.css","assets/css/pages.css"],["src/scripts/site.js","assets/js/site.js"]])fs.copyFileSync(path.join(root,source),path.join(dist,target));
-  const layout=read("src/layout.html"),nav=read("src/partials/nav.html"),footer=read("src/partials/footer.html"),cta=read("src/partials/cta.html"),dialog=read("src/partials/insight-dialog.html");
+  const layout=read("src/layout.html"),nav=read("src/partials/nav.html"),footer=read("src/partials/footer.html"),cta=read("src/partials/cta.html");
   const concepts=JSON.parse(read("src/content/concepts.json")),articles=JSON.parse(read("src/content/articles.json"));
   const conceptCards=concepts.map(x=>'<article class="showcase-card" data-category="'+esc(x.category)+'"><a class="showcase-image" href="'+esc(x.url)+'" aria-label="Explore '+esc(x.name)+' concept"><img loading="lazy" decoding="async" src="/assets/images/'+esc(x.image)+'" alt="Visual inspiration for the '+esc(x.name)+' concept"></a><div class="showcase-body"><span>'+esc(x.eyebrow)+'</span><h3><a href="'+esc(x.url)+'">'+esc(x.name)+'</a></h3><p>'+esc(x.description)+'</p><a href="'+esc(x.url)+'" class="mini-btn">Explore concept ↗</a></div></article>').join("\n");
   const articleCards=articles.map(x=>'<article class="showcase-card article-card" data-search-text="'+esc([x.title,x.category,x.summary].join(" ").toLowerCase())+'"><a class="showcase-image" href="'+esc(x.url)+'" aria-label="Read '+esc(x.title)+'"><img loading="lazy" decoding="async" src="/assets/images/'+esc(x.image)+'" alt="Editorial visual for '+esc(x.title)+'"></a><div class="showcase-body"><span>'+esc(x.category)+' · '+esc(x.readingTime)+'</span><h3><a href="'+esc(x.url)+'">'+esc(x.title)+'</a></h3><p>'+esc(x.summary)+'</p><a class="mini-btn" href="'+esc(x.url)+'">Read article ↗</a></div></article>').join("\n");
@@ -36,17 +36,11 @@
   for(const p of configs){
     let body=p.body||read("src/pages/"+p.source+".html");
     body=body.replaceAll("{{CONCEPT_GRID}}",conceptCards).replaceAll("{{ARTICLE_GRID}}",articleCards).replaceAll("{{CTA}}",cta);
-    if(p.id==="home"){
-      const urls=["/insights/brand-led-growth/","/insights/digital-experience/","/insights/automation-with-intent/"];
-      let count=0;
-      body=body.replace(/<button class="mini-btn insight-open"[^>]*>Read More<\/button>/g,()=>'<a class="mini-btn" href="'+urls[count++]+'">Read article ↗</a>');
-      if(count!==3)throw Error("Homepage requires three insight cards");
-      body=body.replace(/href="#contact"/g,'href="/contact/"').replace(/href="#work"/g,'href="/work/"');
-    }
-    const hero=p.id==="home"?read("src/partials/hero-home.html"):'<div class="inner-hero-copy"><span class="pill dark">'+p.heroLabel+'</span><h1>'+p.heroTitle+'</h1><p>'+esc(p.heroText)+'</p><div class="inner-hero-foot"><a href="/work/">Explore concepts ↗</a><a href="/contact/">Start a project ↗</a></div></div>';
+    if(p.id==="home")body=body.replace(/href="#contact"/g,'href="/contact/"').replace(/href="#work"/g,'href="/work/"');
+        const hero=p.id==="home"?read("src/partials/hero-home.html"):'<div class="inner-hero-copy"><span class="pill dark">'+p.heroLabel+'</span><h1>'+p.heroTitle+'</h1><p>'+esc(p.heroText)+'</p><div class="inner-hero-foot"><a href="/work/">Explore concepts ↗</a><a href="/contact/">Start a project ↗</a></div></div>';
     let navbar=nav.replace('data-nav="'+p.id+'"','data-nav="'+p.id+'" aria-current="page"');
     let html=layout;
-    const params={"{{TITLE}}":esc(p.title),"{{DESCRIPTION}}":esc(p.description),"{{CANONICAL}}":"https://agency.pincodeit.com"+p.route,"{{PAGE_ID}}":p.id,"{{HERO_CLASS}}":p.id==="home"?"":"hero-inner","{{NAV}}":navbar,"{{HERO}}":hero,"{{BODY}}":body,"{{FOOTER}}":footer,"{{DIALOG}}":dialog};
+    const params={"{{TITLE}}":esc(p.title),"{{DESCRIPTION}}":esc(p.description),"{{CANONICAL}}":"https://agency.pincodeit.com"+p.route,"{{PAGE_ID}}":p.id,"{{HERO_CLASS}}":p.id==="home"?"":"hero-inner","{{NAV}}":navbar,"{{HERO}}":hero,"{{BODY}}":body,"{{FOOTER}}":footer};
     for(const [key,value] of Object.entries(params))html=html.replaceAll(key,()=>value);
     if(/\{\{[^}]+\}\}/.test(html))throw Error("Unresolved layout variable in "+p.route);
     const target=p.route==="/"?path.join(dist,"index.html"):p.route==="/404.html"?path.join(dist,"404.html"):path.join(dist,p.route.slice(1),"index.html");
