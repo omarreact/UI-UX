@@ -23,7 +23,7 @@
   const route=relative==="index.html"?"/":relative==="404.html"?"/404.html":"/"+relative.replace(/index.html$/,"");
   paths.add(route);
   assert((html.match(/<h1(?:\s|>)/gi)||[]).length===1,route+": must have one H1");
-  assert(/<main id="main-content">/.test(html)&&/<footer>/.test(html),route+": missing semantic layout");
+  assert(/<main\s+id="main-content">/.test(html)&&/<footer(?:\s|>)/.test(html),route+": missing semantic layout");
   assert(/<meta name="description"/.test(html)&&/<link rel="canonical"/.test(html),route+": missing metadata");
   assert(/<link rel="stylesheet" href="\/assets\/css\/site.css">/.test(html),route+": missing shared stylesheet");
   assert(/<script type="module" src="\/assets\/js\/site.js"><\/script>/.test(html),route+": missing module script");
