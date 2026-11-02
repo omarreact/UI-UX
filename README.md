@@ -40,7 +40,7 @@ wrangler.jsonc             Cloudflare Workers Static Assets configuration
 dist/                      Generated output, not committed
 ```
 
-The original homepage's visual identity was preserved and extended across every destination. Shared header, footer, CTA, metadata, and page layouts are generated at build time, ensuring that navigation is available even when JavaScript is disabled. Dynamic interactions use standard browser APIs only.
+The independent visual identity uses an original editorial-electronic direction: deep ultraviolet, electric violet, pale lilac, citron, bold grotesk typography, and constructive geometric artwork. Shared header, footer, CTA, metadata, and page layouts are generated at build time, ensuring that navigation is available even when JavaScript is disabled. Dynamic interactions use standard browser APIs only.
 
 ## Run locally
 
@@ -80,3 +80,7 @@ Deploy command: `npx --yes wrangler@4.148.0 deploy`.
 The GitHub Actions workflow also executes Playwright browser checks across **320, 375, 430, 768, 1024, and 1440px** on all primary pages, plus the detail pages and main interactions. Before merging significant changes, confirm the pull request's checks pass.
 
 No credentials or API secrets belong in the repository. The root `index.html` is a compatibility redirect for former GitHub Pages visitors; generated HTML in `dist/` is the only production output.
+
+## Independent identity refresh
+
+Softly has its own navigation, monogram, homepage composition, geometric motif and color palette. All source files belong to this standalone repository; none are borrowed from other projects. Native CSS identity tokens and overrides live in `src/styles/identity.css`. The design-system page is an interactive reference for current colors and components. All illustrative projects remain clearly labeled concepts.
