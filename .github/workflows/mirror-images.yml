@@ -1,0 +1,59 @@
+name: Mirror agency photography
+
+on:
+  push:
+    paths:
+      - '.github/workflows/mirror-images.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Download optimized image assets into Git
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/images
+          while read -r id width; do
+            curl --fail --location --silent --show-error --retry 3 \
+              --connect-timeout 15 --max-time 90 \
+              "https://images.unsplash.com/${id}?fit=crop&w=${width}&q=80&fm=webp" \
+              --output "assets/images/${id}.webp"
+            test -s "assets/images/${id}.webp"
+            file "assets/images/${id}.webp"
+          done <<'IMAGES'
+          photo-1558655146-d09347e92766 900
+          photo-1494790108377-be9c29b29330 120
+          photo-1500648767791-00dcc994a43e 120
+          photo-1534528741775-53994a69daeb 120
+          photo-1518005020951-eccb494ad742 1200
+          photo-1556742502-ec7c0e9f34b1 1200
+          photo-1551288049-bebda4e38f71 1200
+          photo-1556761175-b413da4baf72 1000
+          photo-1543269664-7eef42226a21 1000
+          photo-1580489944761-15a19d654956 150
+          photo-1485827404703-89b55fcc595e 800
+          photo-1520607162513-77705c0f0d4a 800
+          photo-1557804506-669a67965ba0 800
+          IMAGES
+
+      - name: Commit repository-owned images
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/images/
+          if ! git diff --staged --quiet; then
+            git commit -m "Mirror optimized agency photography as first-party assets"
+            git push
+          fi
