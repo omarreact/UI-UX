@@ -40,6 +40,9 @@ jobs:
       - name: Build first-party website assets
         run: node scripts/build-static.cjs
 
+      - name: Validate internal links, scripts and first-party assets
+        run: node scripts/validate-site.cjs
+
       - name: Test responsive layouts and interactions
         run: node tests/responsive-ui.smoke.cjs
 
