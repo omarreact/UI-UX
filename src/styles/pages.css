@@ -223,3 +223,8 @@
   .nav-links.is-open a[aria-current="page"] { background:rgba(255,127,67,.18); color:#fff; }
   .nav-links.is-open a[aria-current="page"]::after { display:none; }
 }
+
+/* Keep compact mobile navigation; the project CTA appears inside the expanded menu. */
+@media (max-width: 900px) {
+  nav > .nav-cta { display: none !important; }
+}
