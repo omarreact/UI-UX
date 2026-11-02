@@ -1478,6 +1478,121 @@
             .back-to-top { transition:none; }
         }
 
+
+        /* Link design system — native CSS, no browser-default blue/underline links. */
+        .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 44px;
+            padding: 8px 1px;
+            color: rgba(255,255,255,.78);
+            text-decoration: none;
+            text-underline-offset: .3em;
+            transition: color .2s ease;
+        }
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 5px;
+            height: 2px;
+            border-radius: 2px;
+            background: #ff974e;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform .22s cubic-bezier(.22,1,.36,1);
+        }
+        .nav-links a:is(:hover, :focus-visible, [aria-current="location"]) {
+            color: #fff;
+        }
+        .nav-links a:is(:hover, :focus-visible, [aria-current="location"])::after {
+            transform: scaleX(1);
+        }
+        .nav-links .nav-mobile-cta { display: none; }
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            min-height: 44px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .nav-cta:hover {
+            color: #fff;
+            background: #ff8846;
+            box-shadow: 0 12px 26px rgba(255,107,53,.32);
+        }
+        .brand, .brand:visited { text-decoration: none; }
+        .mini-btn {
+            justify-content: center;
+            line-height: 1.4;
+            text-align: center;
+            cursor: pointer;
+        }
+        .mini-btn:hover, .mini-btn:focus-visible {
+            border-color: #eb976f;
+            background: #fff1e7;
+            color: #78351b;
+        }
+        .light-btn:hover, .light-btn:focus-visible {
+            background: #fff;
+            border-color: #dbb49e;
+        }
+        footer .footer-grid a:not(.brand) {
+            display: flex;
+            align-items: center;
+            width: fit-content;
+            max-width: 100%;
+            min-height: 40px;
+            margin: 0;
+            padding: 6px 0;
+            color: #675a50;
+            font-size: 13px;
+            line-height: 1.5;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 4px;
+            transition: color .2s ease, text-decoration-color .2s ease;
+        }
+        footer .footer-grid a:not(.brand):is(:hover, :focus-visible) {
+            color: #a9441c;
+            text-decoration-color: currentColor;
+        }
+        .mobile-toggle { min-width: 44px; min-height: 44px; }
+        @media (max-width: 900px) {
+            .nav-links.is-open a {
+                justify-content: flex-start;
+                width: 100%;
+                text-decoration: none;
+            }
+            .nav-links.is-open a::after { display: none; }
+            .nav-links.is-open a[aria-current="location"] {
+                color: #fff;
+                background: rgba(255,127,67,.18);
+            }
+            .nav-links.is-open .nav-mobile-cta {
+                display: flex;
+                justify-content: center;
+                margin-top: 8px;
+                min-height: 46px;
+                color: #fff;
+                background: linear-gradient(135deg, #ff6b35, #ff8942);
+                font-weight: 850;
+                box-shadow: 0 8px 20px rgba(255,107,53,.22);
+            }
+            .nav-links.is-open .nav-mobile-cta:is(:hover,:focus-visible) {
+                background: #ff8846;
+                color: #fff;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .nav-links a::after { transition: none; }
+            .nav-links a, footer .footer-grid a:not(.brand) { transition: none; }
+        }
+
         .process-avatar { display: grid; place-items: center; flex: 0 0 52px; width: 52px; height: 52px; border-radius: 50%; font-family: Georgia, serif; font-size: 28px; background: linear-gradient(140deg, #ff6b35, #f6b27e); color: #fff; font-weight: 700; }
     </style>
 </head>
@@ -1511,6 +1626,7 @@
                     <a href="#why">Why Us</a>
                     <a href="#blog">Insights</a>
                     <a href="#faq">FAQ</a>
+                    <a href="#contact" class="nav-mobile-cta">Start a Project</a>
                 </div>
 
                 <a href="#contact" class="nav-cta">Start a Project</a>
