@@ -211,6 +211,7 @@ if (projectForm) {
 const colorStatus = document.querySelector("[data-color-status]");
 document.querySelectorAll("[data-copy-color]").forEach(button => {
     button.addEventListener("click", async () => {
+        if (colorStatus) colorStatus.textContent = "Selected color: " + button.dataset.copyColor;
         try {
             if (!navigator.clipboard || !navigator.clipboard.writeText) throw Error("Clipboard unavailable");
             await navigator.clipboard.writeText(button.dataset.copyColor);
