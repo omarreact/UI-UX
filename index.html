@@ -1281,6 +1281,83 @@
                 flex-direction: column
             }
         }
+
+        /* Responsive refinements: fluid tablet layout, accessible mobile navigation and safe content sizing. */
+        img, video, iframe, svg { max-width: 100%; }
+        img, video { height: auto; }
+        .wrap, .hero-content, .center-head, .case-copy, .footer-grid > *, .service-grid > * { min-width: 0; }
+        h1, h2, h3, p, a { overflow-wrap: break-word; }
+        html { scroll-padding-top: 90px; }
+        @media (min-width: 901px) and (max-width: 1130px) {
+            nav { gap: 15px; }
+            .nav-links { gap: 15px; }
+            .hero-card { width: min(340px, 36vw); right: 25px; }
+            .glass-panel { right: 25px; width: min(400px, 40vw); }
+            .hero-content { padding-top: 120px; }
+            .hero h1 { font-size: clamp(52px, 6.8vw, 85px); }
+            .intro .wrap { gap: 25px; }
+            .abstract { width: 100%; }
+            .service-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+        }
+        @media (max-width: 900px) {
+            .wrap { width: min(740px, calc(100% - 36px)); }
+            .hero-content { width: min(740px, calc(100% - 36px)); }
+            nav { width: min(740px, calc(100% - 24px)); }
+            nav { flex-wrap: wrap; }
+            .mobile-toggle { cursor: pointer; flex: 0 0 38px; }
+            .nav-links.is-open {
+                display: flex;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 0;
+                right: 0;
+                z-index: 40;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 12px;
+                border: 1px solid rgba(255,255,255,.18);
+                border-radius: 20px;
+                background: #21120e;
+                box-shadow: 0 16px 35px rgba(0,0,0,.3);
+            }
+            .nav-links.is-open a { padding: 13px 14px; border-radius: 9px; color: white; }
+            .nav-links.is-open a:hover, .nav-links.is-open a:focus-visible { background: rgba(255,255,255,.1); }
+            .hero h1 { font-size: clamp(40px, 8vw, 72px); max-width: 670px; }
+            .hero { min-height: 700px; }
+            .hero-card { width: min(440px, calc(100% - 36px)); }
+            .intro .wrap { gap: 26px; }
+            .abstract { max-width: 440px; }
+            .service-grid, .blog-grid, .quote-grid, .feature-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+            .footer-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+        }
+        @media (max-width: 600px) {
+            .wrap { width: calc(100% - 32px); }
+            .hero { min-height: 680px; }
+            .hero-content { padding-top: clamp(68px, 15vw, 105px); }
+            .hero h1 { font-size: clamp(37px, 10.3vw, 57px); line-height: .98; letter-spacing: -.06em; }
+            .hero p { max-width: 100%; }
+            .hero-card { bottom: 22px; }
+            .hero-actions { flex-wrap: wrap; }
+            .service-grid, .blog-grid, .quote-grid, .feature-grid { grid-template-columns: minmax(0,1fr); }
+            .stats-box { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            .footer-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 25px 16px; }
+            .center-head h2, .intro h2, .blog .center-head h2, .faq h2, .cta-box h2 { font-size: clamp(28px,8vw,36px); }
+            .work .center-head h2 { font-size: clamp(30px,8.7vw,40px); }
+            .case-img { height: clamp(190px,62vw,265px); }
+            .quote-box blockquote { font-size: clamp(23px,6vw,29px); }
+        }
+        @media (max-width: 360px) {
+            .brand b { font-size: 12px; }
+            .hero h1 { font-size: 35px; }
+            .hero-card { padding: 12px; bottom: 12px; }
+            .hero { min-height: 700px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .stats-box { grid-template-columns: 1fr 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
     </style>
 </head>
 
@@ -1305,7 +1382,7 @@
                     </span>
                 </a>
 
-                <div class="nav-links">
+                <div class="nav-links" id="primary-navigation">
                     <a href="#services">Services</a>
                     <a href="#work">Work</a>
                     <a href="#why">Why Us</a>
@@ -1315,7 +1392,7 @@
 
                 <a href="#contact" class="nav-cta">Book a Call</a>
 
-                <button class="mobile-toggle" aria-label="Menu">
+                <button class="mobile-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" />
@@ -1796,6 +1873,24 @@
     </footer>
 
     <script>
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileLinks = document.querySelector('#primary-navigation');
+        if (mobileToggle && mobileLinks) {
+            const closeMenu = () => {
+                mobileLinks.classList.remove('is-open');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                mobileToggle.setAttribute('aria-label', 'Open navigation menu');
+            };
+            mobileToggle.addEventListener('click', () => {
+                const isOpen = mobileLinks.classList.toggle('is-open');
+                mobileToggle.setAttribute('aria-expanded', String(isOpen));
+                mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+            });
+            mobileLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+            document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+            document.addEventListener('click', event => { if (!mobileToggle.contains(event.target) && !mobileLinks.contains(event.target)) closeMenu(); });
+            window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
+        }
         document.querySelectorAll('.acc-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 const item = btn.closest('.acc-item');
