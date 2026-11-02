@@ -1,0 +1,50 @@
+name: Responsive UI smoke checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tests/**'
+      - '.github/workflows/responsive-ui.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tests/**'
+      - '.github/workflows/responsive-ui.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  responsive-ui:
+    name: Browser QA (320–1440px)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install isolated browser test dependency
+        run: npm install --no-save --no-package-lock playwright
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Test responsive layouts and interactions
+        run: node tests/responsive-ui.smoke.cjs
+
+      - name: Upload failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: responsive-ui-failure-screenshots
+          path: tests/screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
