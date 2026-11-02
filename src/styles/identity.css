@@ -36,13 +36,14 @@ body::before { display:none!important; }
 .orange-btn {
   background:var(--electric);background-image:none;color:white!important;
   border:1px solid var(--electric);box-shadow:6px 6px 0 var(--night);
-  padding:15px 23px; min-height:50px;
+  padding:15px 23px; min-height:50px; border-radius:2px;
 }
 .orange-btn:hover,.orange-btn:focus-visible {
   color:#fff!important;background:#3324D0;box-shadow:9px 9px 0 var(--night);
   transform:translate(-2px,-2px);
 }
 .outline-btn,.light-btn {
+  border-radius:2px;
   color:var(--night)!important;border:1px solid var(--night);
   background:transparent;box-shadow:none;padding:14px 22px;
 }
@@ -51,6 +52,7 @@ body::before { display:none!important; }
   transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--night);
 }
 .mini-btn {
+  border-radius:2px;
   color:var(--night);background:transparent;border:1px solid var(--night);
   padding:10px 17px;min-height:44px;cursor:pointer;box-shadow:none;
 }
@@ -538,7 +540,7 @@ body::before { display:none!important; }
     margin:44px 0 19px;}
   .hero .home-hero-copy p{font-size:15px;max-width:520px;}
   .home-hero-copy .hero-actions{gap:10px;}
-  .hero-actions a{width:auto;white-space:normal;padding:14px 17px;min-height:49px;}
+  .hero-actions a{width:auto;white-space:normal;padding:14px 17px;min-height:49px;border-radius:2px;}
   .hero-bottom-line{padding-top:37px;font-size:9px;}
   .home-hero-art{min-height:400px;}
   .art-stack{width:210px;}
