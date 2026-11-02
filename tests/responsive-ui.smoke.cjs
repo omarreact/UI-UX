@@ -23,9 +23,11 @@
       assert(response.status()===200,route+" returned HTTP "+response.status());
       const d=await page.evaluate(()=>{
        const ids=[...document.querySelectorAll("[id]")].map(x=>x.id);
-       return {viewport:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,h1:document.querySelectorAll("h1").length,nav:!!document.querySelector("nav[aria-label]"),main:!!document.querySelector("main"),footer:!!document.querySelector("footer"),duplicateIds:ids.length!==new Set(ids).size};
+       const vw=document.documentElement.clientWidth;
+       const offenders=[...document.querySelectorAll("body *")].map(el=>({el,rect:el.getBoundingClientRect()})).filter(x=>x.rect.width>0&&(x.rect.right>vw+1||x.rect.left < -1)).sort((a,b)=>b.rect.right-a.rect.right).slice(0,5).map(x=>({tag:x.el.tagName,cls:String(x.el.className||"").slice(0,70),text:x.el.textContent?.trim().slice(0,30),left:Math.round(x.rect.left),right:Math.round(x.rect.right)}));
+       return {viewport:vw,scrollWidth:document.documentElement.scrollWidth,offenders,h1:document.querySelectorAll("h1").length,nav:!!document.querySelector("nav[aria-label]"),main:!!document.querySelector("main"),footer:!!document.querySelector("footer"),duplicateIds:ids.length!==new Set(ids).size};
       });
-      assert(d.scrollWidth<=d.viewport+1,route+" overflow at "+width+"px: "+d.scrollWidth+" > "+d.viewport);
+      assert(d.scrollWidth<=d.viewport+1,route+" overflow at "+width+"px: "+d.scrollWidth+" > "+d.viewport+" culprits="+JSON.stringify(d.offenders));
       assert(d.h1===1&&d.nav&&d.main&&d.footer&&!d.duplicateIds,route+" missing shared semantic layout");
       if(width<=900){
        const menu=page.locator(".mobile-toggle");
