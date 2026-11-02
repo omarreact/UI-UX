@@ -43,6 +43,30 @@
        const style=await nav.evaluate(el=>({decoration:getComputedStyle(el).textDecorationLine,color:getComputedStyle(el).color}));
        assert(style.decoration==="none"&&style.color!=="rgb(0, 0, 238)","Browser-default link styling detected on "+route);
       }
+      if(route==="/services/"){
+        const hero=page.locator(".services-showcase-hero");
+        assert(await hero.count()===1, "Services page should have its own hero composition");
+        assert(await page.locator(".services-showcase-message h1").count()===1,
+          "Services editorial headline is missing");
+        const categories=page.locator(".services-board-list a");
+        assert(await categories.count()===6, "The six capability links are missing");
+        const state=await page.evaluate(()=>{
+          const links=[...document.querySelectorAll(".services-board-list a")];
+          const hero=document.querySelector(".services-showcase-hero");
+          return {
+            display:getComputedStyle(hero).display,
+            columns:getComputedStyle(hero).gridTemplateColumns,
+            validLinks:links.every(a=>a.getAttribute("href")?.startsWith("#") &&
+              document.getElementById(a.getAttribute("href").slice(1))),
+            genericCircle:getComputedStyle(document.querySelector(".hero.hero-inner"),"::after").display
+          };
+        });
+        assert(state.validLinks, "Services capability anchors do not resolve");
+        assert(state.genericCircle==="none", "Old generic hero circles still visible");
+        assert(state.display===(width<=760?"flex":"grid"), "Services hero did not respond to viewport");
+        assert(await page.locator(".services-showcase-primary").getAttribute("href")==="#service-overview",
+          "Services main CTA does not target service cards");
+      }
       if(route==="/work/" && (width===375||width===1440)){
        const chips=page.locator("[data-filter]");
        await chips.filter({hasText:"Brand & Editorial"}).click();
