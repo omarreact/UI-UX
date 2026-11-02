@@ -53,15 +53,44 @@ function assert(condition, details) {
 
         if (width <= 900) {
           const toggle = page.locator('.mobile-toggle');
+          const toggleHeight = await toggle.evaluate(el => el.getBoundingClientRect().height);
+          assert(toggleHeight >= 44, 'Mobile menu touch target is smaller than 44px');
           await toggle.click();
           assert(await toggle.getAttribute('aria-expanded') === 'true', 'Mobile menu did not open');
           assert(await page.locator('#primary-navigation').evaluate(el => el.classList.contains('is-open')),
             'Mobile navigation is not visible');
+          const mobileCTA = page.locator('#primary-navigation .nav-mobile-cta');
+          assert(await mobileCTA.isVisible(), 'Mobile project CTA is missing');
+          assert(await mobileCTA.getAttribute('href') === '#contact', 'Mobile CTA has wrong destination');
+          assert(await mobileCTA.evaluate(el => el.getBoundingClientRect().height) >= 44,
+            'Mobile CTA is smaller than 44px');
           await toggle.click();
           assert(await toggle.getAttribute('aria-expanded') === 'false', 'Mobile menu did not close');
         } else {
           assert(await page.locator('#primary-navigation').isVisible(), 'Desktop navigation is hidden');
+          assert(!(await page.locator('.nav-mobile-cta').isVisible()), 'Mobile-only CTA visible on desktop');
         }
+
+        const links = await page.evaluate(() => {
+          const get = sel => {
+            const el = document.querySelector(sel);
+            const style = getComputedStyle(el);
+            return { decoration: style.textDecorationLine, color: style.color,
+              height: el.getBoundingClientRect().height, display: style.display };
+          };
+          return {
+            nav: get('.nav-links a'),
+            footer: get('footer .footer-grid a[href="#services"]'),
+            primary: get('.hero-actions .orange-btn'),
+            secondary: get('.hero-actions .outline-btn')
+          };
+        });
+        assert(links.nav.decoration === 'none', 'Navigation links retain default underline');
+        assert(links.nav.color !== 'rgb(0, 0, 238)', 'Navigation links retain browser default blue');
+        assert(links.footer.decoration === 'underline', 'Footer lacks its designed hover underline');
+        assert(links.primary.decoration === 'none' && links.secondary.decoration === 'none',
+          'Primary/secondary CTA has an unintended underline');
+        if (width > 900) assert(links.nav.height >= 44, 'Desktop navigation target below 44px');
 
         const faq = page.locator('.acc-btn');
         await faq.nth(1).click();
@@ -74,7 +103,7 @@ function assert(condition, details) {
         assert(!(await page.locator('#insight-dialog').evaluate(el => el.open)), 'Insight dialog did not close');
 
         assert(errors.length === 0, `Browser errors: ${errors.join('; ')}`);
-        console.log(`PASS ${width}px: no overflow; navigation, FAQ and Insights functional`);
+        console.log(`PASS ${width}px: no overflow; link styles, mobile CTA, FAQ and Insights functional`);
       } catch (error) {
         failures.push(`${width}px: ${error.message}`);
         await page.screenshot({
