@@ -53,3 +53,7 @@ Contact requests point to `admin@pincodeit.com`. Before representing the site as
 The build script fails if any of the 13 optimized images is missing or a prohibited CDN dependency is introduced. The validation script checks internal anchors, duplicate IDs, JavaScript syntax, and disclosures. Cloudflare version history provides rollback.
 
 Do not commit tokens, secret keys, credentials, or deployment-hook URLs.
+
+## GitHub push delivery check
+
+Changes pushed to `main` are intended to start the Cloudflare Workers Builds production trigger. This repository includes automated responsive and static validation checks; before announcing a new production release, confirm both GitHub checks and the matching Cloudflare build/deployment status. See Cloudflare Workers Builds for the source commit and deployment version.
