@@ -30,6 +30,7 @@
       if(width<=900){
        const menu=page.locator(".mobile-toggle");
        assert(await menu.evaluate(el=>el.getBoundingClientRect().height)>=44,"Mobile menu target too small");
+       assert(!(await page.locator("nav > .nav-cta").isVisible()),"Duplicate desktop CTA visible on mobile");
        await menu.click();
        assert(await menu.getAttribute("aria-expanded")==="true","Menu did not expand on "+route);
        assert(await page.locator(".nav-mobile-cta").isVisible(),"Missing mobile project action");
