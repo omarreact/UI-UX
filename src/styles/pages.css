@@ -18,9 +18,27 @@
 .inner-hero-copy h1 {font-family:Georgia,"Times New Roman",serif; font-weight:500;font-size:clamp(54px,6.5vw,100px);line-height:.96;letter-spacing:-.068em;max-width:920px;margin:19px 0 20px;text-wrap:balance;}
 .inner-hero-copy h1 em {font-style:normal;color:#ff9d62;}
 .inner-hero-copy p {max-width:650px;font-size:clamp(15px,1.5vw,18px);line-height:1.7;color:rgba(255,245,236,.73);margin:0;}
-.inner-hero-foot {display:flex; align-items:center;gap:18px;flex-wrap:wrap;margin-top:28px;}
-.inner-hero-foot a {color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:800;min-height:44px;}
-.inner-hero-foot a:hover {color:#ffad7c;}
+.inner-hero-foot {display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:29px;}
+.inner-hero-foot a {
+  display:inline-flex;justify-content:center;align-items:center;min-height:46px;
+  padding:12px 19px;gap:10px;border-radius:999px;
+  color:#fff;text-decoration:none;font-size:12px;font-weight:800;
+  background:linear-gradient(135deg,#ff6b35 0%,#ff8a3c 100%);
+  border:1px solid transparent;box-shadow:0 14px 32px rgba(255,107,53,.22);
+  transition:transform .22s cubic-bezier(.22,1,.36,1),background .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.inner-hero-foot a + a {
+  background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.25);
+  box-shadow:none;
+}
+.inner-hero-foot a:hover,.inner-hero-foot a:focus-visible {
+  color:#fff;transform:translateY(-2px);box-shadow:0 16px 32px rgba(255,107,53,.3);
+}
+.inner-hero-foot a + a:hover,.inner-hero-foot a + a:focus-visible {
+  background:rgba(255,255,255,.13);box-shadow:0 10px 24px rgba(0,0,0,.12);
+}
+.inner-hero-foot a:active {transform:translateY(0);}
+@media (prefers-reduced-motion:reduce) {.inner-hero-foot a {transition:none;}}
 .page-section {padding:clamp(66px,7.2vw,110px) 0;}
 .page-section.surface-soft {background:linear-gradient(160deg,rgba(250,246,239,.94),rgba(255,249,242,.35));border-block:1px solid rgba(234,220,206,.7);}
 .page-section h2, .page-section h3 {text-wrap:balance;}
