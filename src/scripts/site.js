@@ -109,3 +109,113 @@ const mobileToggle = document.querySelector('.mobile-toggle');
             }, {rootMargin: '-18% 0px -65% 0px', threshold: 0});
             sectionById.forEach(section => observer.observe(section));
         }
+
+
+
+// Shared, accessible page interactions — no third-party frontend runtime.
+const conceptFilterButtons = Array.from(document.querySelectorAll("[data-filter]"));
+const conceptCards = Array.from(document.querySelectorAll(".showcase-card[data-category]"));
+const conceptCount = document.querySelector("[data-results-count]");
+if (conceptFilterButtons.length && conceptCards.length) {
+    const applyConceptFilter = selected => {
+        let visible = 0;
+        conceptCards.forEach(card => {
+            card.hidden = selected !== "all" && card.dataset.category !== selected;
+            if (!card.hidden) visible++;
+        });
+        conceptFilterButtons.forEach(button => {
+            const active = button.dataset.filter === selected;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", String(active));
+        });
+        if (conceptCount) conceptCount.textContent = visible + " concept" + (visible === 1 ? "" : "s");
+    };
+    conceptFilterButtons.forEach(button => button.addEventListener("click", () => applyConceptFilter(button.dataset.filter)));
+    applyConceptFilter("all");
+}
+
+const articleSearch = document.querySelector("[data-article-search]");
+if (articleSearch) {
+    const cards = Array.from(document.querySelectorAll(".article-card[data-search-text]"));
+    const counter = document.querySelector("[data-article-count]");
+    const empty = document.querySelector("[data-article-empty]");
+    const runSearch = () => {
+        const query = articleSearch.value.trim().toLocaleLowerCase();
+        let visible = 0;
+        cards.forEach(card => {
+            card.hidden = !card.dataset.searchText.includes(query);
+            if (!card.hidden) visible++;
+        });
+        if (counter) counter.textContent = query ? visible + " matching article" + (visible === 1 ? "" : "s") : "Showing all " + cards.length + " articles";
+        if (empty) empty.hidden = visible !== 0;
+    };
+    articleSearch.addEventListener("input", runSearch);
+    runSearch();
+}
+
+// This showcase deliberately uses the visitor's email client; no undisclosed backend.
+const projectForm = document.querySelector("#project-form");
+if (projectForm) {
+    const feedback = document.querySelector("#form-feedback");
+    const serviceSelect = projectForm.elements.namedItem("service");
+    const preselected = new URLSearchParams(window.location.search).get("service");
+    if (preselected && serviceSelect) {
+        const available = Array.from(serviceSelect.options).some(option => option.value === preselected);
+        if (available) serviceSelect.value = preselected;
+    }
+    const compose = () => {
+        if (!projectForm.reportValidity()) return null;
+        const data = new FormData(projectForm);
+        const clean = value => String(value || "").trim();
+        return [
+            "Project inquiry — Softly Solutions design showcase",
+            "",
+            "Name: " + clean(data.get("name")),
+            "Email: " + clean(data.get("email")),
+            "Service: " + clean(data.get("service")),
+            "Stage: " + clean(data.get("stage")),
+            "",
+            "Project overview:",
+            clean(data.get("message"))
+        ].join("\n");
+    };
+    projectForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const message = compose();
+        if (!message) {
+            if (feedback) feedback.textContent = "Please complete the required fields before preparing your inquiry.";
+            return;
+        }
+        const subject = "Website design inquiry — Softly Solutions showcase";
+        if (feedback) feedback.textContent = "Your email application will open with the message prepared. Review it and press Send there to deliver it.";
+        window.location.href = "mailto:admin@pincodeit.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message);
+    });
+    const copyButton = document.querySelector("[data-copy-inquiry]");
+    if (copyButton) copyButton.addEventListener("click", async () => {
+        const message = compose();
+        if (!message) {
+            if (feedback) feedback.textContent = "Complete the required fields before copying your inquiry.";
+            return;
+        }
+        try {
+            if (!navigator.clipboard || !navigator.clipboard.writeText) throw Error("Clipboard unavailable");
+            await navigator.clipboard.writeText(message);
+            if (feedback) feedback.textContent = "Inquiry copied. Paste it into your preferred email or messaging app.";
+        } catch {
+            if (feedback) feedback.textContent = "Clipboard access is unavailable. Use Prepare inquiry to open your email application.";
+        }
+    });
+}
+
+const colorStatus = document.querySelector("[data-color-status]");
+document.querySelectorAll("[data-copy-color]").forEach(button => {
+    button.addEventListener("click", async () => {
+        try {
+            if (!navigator.clipboard || !navigator.clipboard.writeText) throw Error("Clipboard unavailable");
+            await navigator.clipboard.writeText(button.dataset.copyColor);
+            if (colorStatus) colorStatus.textContent = button.dataset.copyColor + " copied to clipboard.";
+        } catch {
+            if (colorStatus) colorStatus.textContent = "Color code: " + button.dataset.copyColor + ". Copy it manually if clipboard permission is unavailable.";
+        }
+    });
+});
