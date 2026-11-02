@@ -5,6 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Softly Solutions — Smarter Digital. Stronger Brands.</title>
+    <meta name="description" content="Softly Solutions brings together brand strategy, digital design, AI workflows and growth-focused experiences for ambitious teams.">
+    <meta name="theme-color" content="#120807">
+    <meta name="color-scheme" content="light">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Softly Solutions — Smarter Digital. Stronger Brands.">
+    <meta property="og:description" content="Strategy, design, AI systems and measurable execution for ambitious brands.">
+    <meta property="og:url" content="https://agency.pincodeit.com/">
+    <link rel="canonical" href="https://agency.pincodeit.com/">
 
     <style>
 
@@ -1333,13 +1341,150 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
         }
+
+        /* Design polish: native CSS and progressive enhancement, with the original palette intact. */
+        :root { --focus-ring: #ef743c; --section-space: clamp(48px, 6vw, 84px); }
+        html { scroll-padding-top: 22px; }
+        body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+        main { display: block; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        button { font: inherit; }
+        :where(button, a):focus-visible {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 4px;
+        }
+        :where(a, button).orange-btn, :where(a, button).nav-cta,
+        :where(a, button).outline-btn, :where(a, button).mini-btn,
+        :where(a, button).light-btn { min-height: 44px; }
+        :where(.orange-btn, .nav-cta, .light-btn, .outline-btn, .mini-btn) {
+            transition: transform .24s cubic-bezier(.22,1,.36,1),
+                        box-shadow .24s ease, filter .24s ease, background-color .24s ease;
+        }
+        :where(.orange-btn, .nav-cta, .light-btn, .outline-btn, .mini-btn):hover {
+            transform: translateY(-2px);
+            filter: saturate(1.07);
+        }
+        :where(.orange-btn, .nav-cta, .light-btn, .outline-btn, .mini-btn):active {
+            transform: translateY(0) scale(.985);
+        }
+        .section-title { text-wrap: balance; }
+        .hero h1 { text-wrap: balance; }
+        .hero p, .center-head p { text-wrap: pretty; }
+        .service-card, .feature, .blog-card, .quote-card {
+            transition: transform .32s cubic-bezier(.22,1,.36,1),
+                        box-shadow .32s ease, border-color .32s ease;
+        }
+        :where(.service-card, .feature, .blog-card, .quote-card):hover {
+            transform: translateY(-4px);
+            box-shadow: 0 26px 58px rgba(60, 38, 19, .11);
+            border-color: rgba(239,116,60,.37);
+        }
+        .service-grid, .feature-grid, .blog-grid, .quote-grid { align-items: stretch; }
+        .service-card, .feature, .blog-card, .quote-card { min-width: 0; }
+        .service-card { min-height: 230px; }
+        .case-img img { transition: transform .7s cubic-bezier(.22,1,.36,1); }
+        .case:hover .case-img img { transform: scale(1.035); }
+        .case-copy h3 { text-wrap: balance; }
+        .acc-btn { min-height: 44px; line-height: 1.45; }
+        .acc-btn:hover .plus { background: #ffe2cc; }
+        .acc-content { visibility: hidden; }
+        .acc-item.active .acc-content { visibility: visible; }
+        .acc-content p { padding-bottom: 6px; }
+        .scroll-progress {
+            position: fixed; inset: 0 auto auto 0; width: 0; height: 3px;
+            z-index: 2000; pointer-events: none; background: linear-gradient(90deg,#ff6b35,#ffb56e);
+        }
+        .skip-link {
+            position: fixed; left: 18px; top: 12px; z-index: 3000;
+            padding: 13px 18px; border-radius: 12px;
+            background: #fff; color: #211915; font-weight: 800;
+            box-shadow: 0 10px 35px rgba(0,0,0,.18);
+            transform: translateY(-160%);
+        }
+        .skip-link:focus { transform: translateY(0); }
+        .back-to-top {
+            position: fixed; right: clamp(16px, 3vw, 38px); bottom: clamp(16px, 3vw, 38px);
+            z-index: 50; display: grid; place-items: center; width: 48px; height: 48px;
+            border-radius: 50%; background: #1b0f0d; color: #fff;
+            font-size: 23px; text-decoration: none; font-weight: 600;
+            box-shadow: 0 12px 34px rgba(23,10,9,.26);
+            opacity: 0; visibility: hidden; transform: translateY(12px);
+            transition: opacity .25s, visibility .25s, transform .25s;
+        }
+        .back-to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { background: #e96b37; }
+        .quote-symbol { font-family: Georgia, serif; font-size: 60px; line-height: 1; padding-top: 16px; }
+        .insight-open { cursor: pointer; border: 0; font-family: inherit; }
+        .insight-dialog {
+            width: min(680px, calc(100vw - 28px)); max-height: min(85dvh, 750px);
+            border: 1px solid #ecd9c9; border-radius: 25px; padding: 0;
+            color: #211915; background: #fffcf7;
+            box-shadow: 0 30px 110px rgba(19,9,6,.3);
+        }
+        .insight-dialog::backdrop { background: rgba(15,7,6,.7); backdrop-filter: blur(6px); }
+        .insight-dialog-inner { padding: clamp(22px,5vw,42px); }
+        .insight-dialog-top { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+        .insight-close {
+            display:grid; place-items:center; width:44px; height:44px; border:1px solid #eaded2;
+            border-radius:50%; background: #fff7ef; color:#46281d;
+            font-size:28px; cursor:pointer; line-height:1;
+        }
+        .insight-close:hover { background:#ffe9d6; }
+        .insight-dialog h2 { margin: 18px 0 16px; font-size: clamp(29px, 5vw, 42px); line-height:1.07; letter-spacing:-.06em; text-wrap:balance; }
+        .insight-dialog-body { color:#66584e; font-size:15px; line-height:1.8; }
+        .insight-dialog-body p { margin: 0 0 16px; }
+        .insight-dialog-foot { display:flex; gap:12px; flex-wrap:wrap; margin-top:22px; }
+        .insight-done { cursor:pointer; font-family:inherit; }
+        @media (max-width: 900px) {
+            .hero { min-height: min(760px, max(660px, 90svh)); }
+            .nav-links.is-open a { min-height: 44px; display:flex; align-items:center; }
+            .nav-links.is-open a[aria-current="location"] { background:rgba(255,127,67,.16); }
+            .intro .wrap, .trust-grid, .testimonial-main, .faq-grid { min-width:0; }
+            .hero-card { right:50%; transform: translateX(50%); }
+        }
+        @media (max-width: 600px) {
+            .hero { min-height: max(675px, 95svh); }
+            .hero-content { padding-top: clamp(58px, 11svh, 105px); }
+            .hero-card { bottom: clamp(18px,4svh,40px); }
+            .hero-actions a { text-align: center; }
+            .stat b { font-size:clamp(27px,8vw,34px); }
+            .stat span { line-height:1.5; }
+            .blog-img { height:clamp(190px,57vw,240px); }
+            .trust-photo { height:clamp(250px,78vw,340px); }
+            .acc-item { padding: 12px 9px; }
+            .acc-content p { margin-right:0; }
+            .insight-dialog-inner { padding:22px 18px; }
+        }
+        @media (max-width: 360px) {
+            .hero { min-height: 710px; }
+            .hero-actions { gap: 8px; }
+            .hero-actions a { padding: 12px 13px; }
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            .hero-content > .pill { animation: enter-up .7s both; }
+            .hero-content > h1 { animation: enter-up .8s .09s both; }
+            .hero-content > p { animation: enter-up .8s .18s both; }
+            .hero-actions { animation: enter-up .8s .27s both; }
+            @keyframes enter-up {
+                from { opacity:0; transform: translateY(17px); }
+                to { opacity:1; transform: translateY(0); }
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .insight-dialog::backdrop { backdrop-filter:none; }
+            .scroll-progress { display:none; }
+            .back-to-top { transition:none; }
+        }
+
     </style>
 </head>
 
 <body>
-    <section class="top-shell" id="top">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <header class="top-shell" id="top">
         <div class="hero">
-            <nav>
+            <nav aria-label="Primary navigation">
                 <a class="brand" href="#top">
                     <span class="brand-mark">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -1365,7 +1510,7 @@
                     <a href="#faq">FAQ</a>
                 </div>
 
-                <a href="#contact" class="nav-cta">Book a Call</a>
+                <a href="#contact" class="nav-cta">Start a Project</a>
 
                 <button class="mobile-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -1394,21 +1539,22 @@
                 <div style="display:flex;align-items:center;margin-top:18px">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
                         style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #160a08"
-                        alt="">
+                        alt="" decoding="async">
                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
                         style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #160a08;margin-left:-10px"
-                        alt="">
+                        alt="" decoding="async">
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
                         style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #160a08;margin-left:-10px"
-                        alt="">
+                        alt="" decoding="async">
                     <b style="font-size:11px;color:rgba(255,255,255,.56);margin-left:12px">120+ happy partners</b>
                 </div>
             </div>
 
             <div class="glass-panel"></div>
         </div>
-    </section>
+    </header>
 
+    <main id="main-content">
     <section class="clients">
         <div class="wrap">
             <p>Trusted by growing teams across the globe</p>
@@ -1449,25 +1595,25 @@
             </div>
 
             <div class="service-grid">
-                <article class="service-card">
+                <article class="service-card" id="service-brand-strategy">
                     <div class="icon">✓</div>
                     <h3>Brand Strategy</h3>
                     <p>Positioning, messaging, and digital roadmaps that make every move more intentional.</p>
                 </article>
 
-                <article class="service-card">
+                <article class="service-card" id="service-sales-media">
                     <div class="icon">↗</div>
                     <h3>Sales & Media</h3>
                     <p>Performance campaigns, content funnels, and social assets designed to convert.</p>
                 </article>
 
-                <article class="service-card">
+                <article class="service-card" id="service-ai-process">
                     <div class="icon">✦</div>
                     <h3>AI Process</h3>
                     <p>Workflow automation and AI-assisted systems that free your team from repetitive work.</p>
                 </article>
 
-                <article class="service-card">
+                <article class="service-card" id="service-web-design">
                     <div class="icon">▣</div>
                     <h3>Creative Media</h3>
                     <p>Visual identity, websites, motion, and branded content with a premium finish.</p>
@@ -1503,24 +1649,24 @@
                         <h3>NovaHire — AI Recruitment Platform</h3>
                         <p>A smarter hiring dashboard with AI summaries, candidate pipelines, and recruiter workflows.
                         </p>
-                        <a class="mini-btn" href="#contact">View project</a>
+                        <a class="mini-btn" href="#contact">Discuss this work</a>
                     </div>
                     <div class="case-img">
                         <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=80"
-                            alt="Abstract digital platform">
+                            alt="Abstract digital platform" loading="lazy" decoding="async">
                     </div>
                 </article>
 
                 <article class="case alt">
                     <div class="case-img">
                         <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1200&q=80"
-                            alt="Retail analytics">
+                            alt="Retail analytics" loading="lazy" decoding="async">
                     </div>
                     <div class="case-copy">
                         <span class="tiny">Commerce</span>
                         <h3>RetailSense — Smart Store Analytics</h3>
                         <p>Modern analytics and sales reporting for fast-moving retail operators.</p>
-                        <a class="mini-btn" href="#contact">View project</a>
+                        <a class="mini-btn" href="#contact">Discuss this work</a>
                     </div>
                 </article>
 
@@ -1529,11 +1675,11 @@
                         <span class="tiny">Fintech</span>
                         <h3>FinVision — Predictive Finance Dashboard</h3>
                         <p>A real-time intelligence layer for finance teams, forecasts, and executive reports.</p>
-                        <a class="mini-btn" href="#contact">View project</a>
+                        <a class="mini-btn" href="#contact">Discuss this work</a>
                     </div>
                     <div class="case-img">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
-                            alt="Finance dashboard">
+                            alt="Finance dashboard" loading="lazy" decoding="async">
                     </div>
                 </article>
             </div>
@@ -1554,7 +1700,7 @@
             <div class="trust-grid">
                 <div class="trust-photo">
                     <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1000&q=80"
-                        alt="Business owner">
+                        alt="Business owner" loading="lazy" decoding="async">
                 </div>
 
                 <div class="feature-grid">
@@ -1593,12 +1739,8 @@
             <div class="testimonial-main">
                 <div class="video">
                     <img src="https://images.unsplash.com/photo-1543269664-7eef42226a21?auto=format&fit=crop&w=1000&q=80"
-                        alt="Client video">
-                    <div class="play">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 7.5v9l8-4.5-8-4.5Z" fill="currentColor" />
-                        </svg>
-                    </div>
+                        alt="People collaborating in a creative studio" loading="lazy" decoding="async">
+                    <div class="play" aria-hidden="true"><span class="quote-symbol">“</span></div>
                 </div>
 
                 <div class="quote-box">
@@ -1608,7 +1750,7 @@
                     </blockquote>
                     <div class="person">
                         <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80"
-                            alt="">
+                            alt="" loading="lazy" decoding="async">
                         <div>
                             <b>Maya Thompson</b>
                             <span>Founder, Vertex Studio</span>
@@ -1650,42 +1792,42 @@
                 <article class="blog-card">
                     <div class="blog-img">
                         <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80"
-                            alt="">
+                            alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="blog-content">
                         <span class="tiny">Marketing</span>
                         <h3>The Hidden Cost of Generic Marketing</h3>
-                        <a class="mini-btn" href="#">Read More</a>
+                        <button class="mini-btn insight-open" type="button" data-insight="0" aria-haspopup="dialog" aria-label="Read The Hidden Cost of Generic Marketing">Read More</button>
                     </div>
                 </article>
 
                 <article class="blog-card">
                     <div class="blog-img">
                         <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=800&q=80"
-                            alt="">
+                            alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="blog-content">
                         <span class="tiny">Experience</span>
                         <h3>Why Your Application Matters More Than Ads</h3>
-                        <a class="mini-btn" href="#">Read More</a>
+                        <button class="mini-btn insight-open" type="button" data-insight="1" aria-haspopup="dialog" aria-label="Read Why Your Application Matters More Than Ads">Read More</button>
                     </div>
                 </article>
 
                 <article class="blog-card">
                     <div class="blog-img">
                         <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=80"
-                            alt="">
+                            alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="blog-content">
                         <span class="tiny">Design</span>
                         <h3>A Playbook for Brand-Led Digital Growth</h3>
-                        <a class="mini-btn" href="#">Read More</a>
+                        <button class="mini-btn insight-open" type="button" data-insight="2" aria-haspopup="dialog" aria-label="Read A Playbook for Brand-Led Digital Growth">Read More</button>
                     </div>
                 </article>
             </div>
 
             <div class="section-cta">
-                <a class="orange-btn" href="#contact">View All Insights</a>
+                <a class="orange-btn" href="#contact">Have a Project in Mind?</a>
             </div>
         </div>
     </section>
@@ -1786,12 +1928,15 @@
                 <h2 class="section-title">Ready to Transform<br>Your Business?</h2>
                 <p>Let’s build a digital system that looks premium, works smarter, and grows with your brand.</p>
                 <div class="cta-actions">
-                    <a class="orange-btn" href="mailto:hello@softlysolutions.com">Book a Free Call</a>
+                    <a class="orange-btn" href="mailto:hello@softlysolutions.com?subject=Let%27s%20talk%20about%20a%20project">Request a Discovery Call</a>
                     <a class="light-btn" href="#work">See Our Work</a>
                 </div>
             </div>
         </div>
     </section>
+    </main>
+
+    <a class="back-to-top" href="#top" aria-label="Back to top" title="Back to top">↑</a>
 
     <footer>
         <div class="wrap">
@@ -1826,17 +1971,17 @@
 
                 <div>
                     <h4>Services</h4>
-                    <a href="#">Brand Strategy</a>
-                    <a href="#">AI Automation</a>
-                    <a href="#">Web Design</a>
-                    <a href="#">Media Campaigns</a>
+                    <a href="#service-brand-strategy">Brand Strategy</a>
+                    <a href="#service-ai-process">AI Automation</a>
+                    <a href="#service-web-design">Web Design</a>
+                    <a href="#service-sales-media">Media Campaigns</a>
                 </div>
 
                 <div>
                     <h4>Contact</h4>
                     <a href="mailto:hello@softlysolutions.com">hello@softlysolutions.com</a>
-                    <a href="#">LinkedIn</a>
-                    <a href="#">Instagram</a>
+                    <a href="#contact">Start a Project</a>
+                    <a href="#work">View Our Work</a>
                 </div>
             </div>
 
@@ -1846,6 +1991,22 @@
             </div>
         </div>
     </footer>
+
+
+    <dialog class="insight-dialog" id="insight-dialog" aria-labelledby="insight-dialog-title">
+        <div class="insight-dialog-inner">
+            <div class="insight-dialog-top">
+                <span class="pill" id="insight-dialog-category">INSIGHT</span>
+                <button type="button" class="insight-close" aria-label="Close article">×</button>
+            </div>
+            <h2 id="insight-dialog-title"></h2>
+            <div class="insight-dialog-body" id="insight-dialog-body"></div>
+            <div class="insight-dialog-foot">
+                <a class="orange-btn" href="mailto:hello@softlysolutions.com?subject=Discuss%20a%20digital%20project">Discuss Your Project</a>
+                <button class="light-btn insight-done" type="button">Close</button>
+            </div>
+        </div>
+    </dialog>
 
     <script>
         const mobileToggle = document.querySelector('.mobile-toggle');
@@ -1866,16 +2027,100 @@
             document.addEventListener('click', event => { if (!mobileToggle.contains(event.target) && !mobileLinks.contains(event.target)) closeMenu(); });
             window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
         }
-        document.querySelectorAll('.acc-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                const item = btn.closest('.acc-item');
-                const box = btn.closest('.accordion');
-                box.querySelectorAll('.acc-item').forEach(function (i) {
-                    if (i !== item) i.classList.remove('active');
+
+        // Functional insights without a framework or third-party dependency.
+        const insightArticles = [{"topic":"MARKETING","title":"The Hidden Cost of Generic Marketing","body":["When every brand uses the same claims, stock phrases and visual patterns, customers have little reason to choose one over another. Distinctiveness starts with a specific audience, a clear promise and proof that the promise matters.","Audit the language on your homepage: could a competitor use the exact same sentence? Replace vague superlatives with the customer problem you solve and the result people can expect.","Make your strongest message obvious above the fold, support it with meaningful work examples, and build each campaign around one measurable action."]},{"topic":"DIGITAL EXPERIENCE","title":"Why Your Application Matters More Than Ads","body":["Advertising can bring someone to your product. What they experience next determines whether that attention becomes trust, action or frustration. Speed, clarity, accessibility and the quality of small interactions all shape that decision.","Start with your top three user journeys. Remove unnecessary steps, use understandable labels and make next actions visible on both small and large screens.","Measure successful task completion—not just traffic—and keep refining the areas where people hesitate or abandon their journey."]},{"topic":"DESIGN","title":"A Playbook for Brand-Led Digital Growth","body":["A strong digital identity does more than look recognizable. It makes the company easier to understand, easier to navigate and more memorable after the first visit.","Define a small set of repeatable rules for typography, color, spacing, imagery and motion. Apply them consistently to landing pages, product surfaces and communication.","Review your design alongside real user behavior: the best brand system reinforces the path to action without getting in the way."]}];
+        const insightDialog = document.querySelector('#insight-dialog');
+        if (insightDialog && typeof insightDialog.showModal === 'function') {
+            const closeInsight = () => insightDialog.close();
+            document.querySelectorAll('.insight-open').forEach(button => {
+                button.addEventListener('click', () => {
+                    const item = insightArticles[Number(button.dataset.insight)];
+                    if (!item) return;
+                    document.querySelector('#insight-dialog-category').textContent = item.topic;
+                    document.querySelector('#insight-dialog-title').textContent = item.title;
+                    const body = document.querySelector('#insight-dialog-body');
+                    body.replaceChildren();
+                    item.body.forEach(paragraph => {
+                        const p = document.createElement('p');
+                        p.textContent = paragraph;
+                        body.append(p);
+                    });
+                    insightDialog.showModal();
+                    insightDialog.querySelector('.insight-close').focus();
                 });
-                item.classList.toggle('active');
+            });
+            insightDialog.querySelector('.insight-close').addEventListener('click', closeInsight);
+            insightDialog.querySelector('.insight-done').addEventListener('click', closeInsight);
+            insightDialog.addEventListener('click', event => {
+                if (event.target === insightDialog) closeInsight();
+            });
+        }
+        // A small progress cue and return-to-top affordance for the long landing page.
+        const progress = document.querySelector('.scroll-progress');
+        const backToTop = document.querySelector('.back-to-top');
+        let scrollFrame = false;
+        const updateScrollUI = () => {
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (progress) progress.style.width = (maxScroll > 0 ? Math.min(100, window.scrollY / maxScroll * 100) : 0) + '%';
+            if (backToTop) backToTop.classList.toggle('is-visible', window.scrollY > 800);
+            scrollFrame = false;
+        };
+        window.addEventListener('scroll', () => {
+            if (!scrollFrame) { scrollFrame = true; window.requestAnimationFrame(updateScrollUI); }
+        }, {passive: true});
+        window.addEventListener('resize', updateScrollUI);
+        updateScrollUI();
+
+        // FAQ: connect buttons and answer regions for screen readers; avoid clipped answers.
+        const faqButtons = Array.from(document.querySelectorAll('.acc-btn'));
+        const setFaqOpen = (btn, open) => {
+            const item = btn.closest('.acc-item');
+            const panel = item.querySelector('.acc-content');
+            item.classList.toggle('active', open);
+            btn.setAttribute('aria-expanded', String(open));
+            panel.setAttribute('aria-hidden', String(!open));
+            panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+        };
+        faqButtons.forEach((btn, index) => {
+            const panel = btn.closest('.acc-item').querySelector('.acc-content');
+            const panelId = 'faq-answer-' + (index + 1);
+            const btnId = 'faq-question-' + (index + 1);
+            panel.id = panelId;
+            btn.id = btnId;
+            btn.setAttribute('aria-controls', panelId);
+            panel.setAttribute('role', 'region');
+            panel.setAttribute('aria-labelledby', btnId);
+            setFaqOpen(btn, btn.closest('.acc-item').classList.contains('active'));
+            btn.addEventListener('click', () => {
+                const willOpen = !btn.closest('.acc-item').classList.contains('active');
+                faqButtons.forEach(other => setFaqOpen(other, other === btn && willOpen));
             });
         });
+        window.addEventListener('resize', () => {
+            faqButtons.forEach(btn => {
+                if (btn.closest('.acc-item').classList.contains('active')) {
+                    btn.closest('.acc-item').querySelector('.acc-content').style.maxHeight =
+                        btn.closest('.acc-item').querySelector('.acc-content').scrollHeight + 'px';
+                }
+            });
+        });
+        // Keep navigation highlighting connected to the section being viewed.
+        if ('IntersectionObserver' in window) {
+            const sectionAnchors = Array.from(document.querySelectorAll('#primary-navigation a[href^="#"]'));
+            const sectionById = sectionAnchors.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const link = sectionAnchors.find(a => a.getAttribute('href') === '#' + entry.target.id);
+                    if (link && entry.isIntersecting) {
+                        sectionAnchors.forEach(a => a.removeAttribute('aria-current'));
+                        link.setAttribute('aria-current', 'location');
+                    }
+                });
+            }, {rootMargin: '-18% 0px -65% 0px', threshold: 0});
+            sectionById.forEach(section => observer.observe(section));
+        }
+
     </script>
 </body>
 
