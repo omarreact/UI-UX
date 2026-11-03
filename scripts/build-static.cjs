@@ -140,7 +140,7 @@
     background_color:"#F4F1EC",theme_color:"#120807",
     icons:[{src:"/assets/brand/icon-192.png",sizes:"192x192",type:"image/png"},
            {src:"/assets/brand/icon-512.png",sizes:"512x512",type:"image/png"}]
-  },null,2)+"\\n");
+  },null,2)+"\n");
   require("./package-brand.cjs");
   fs.writeFileSync(path.join(dist,"robots.txt"),"User-agent: *\nAllow: /\nSitemap: https://agency.pincodeit.com/sitemap.xml\n");
   fs.writeFileSync(path.join(dist,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+configs.filter(x=>x.id!=="not-found").map(x=>'<url><loc>https://agency.pincodeit.com'+x.route+'</loc></url>').join("")+'</urlset>');
