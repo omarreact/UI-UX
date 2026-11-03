@@ -1,0 +1,198 @@
+{
+  "work": {
+    "edition": "COLLECTION / 01—06",
+    "kicker": "The concept collection",
+    "title": "Ideas<br><em>made</em><br>visible.",
+    "description": "Six fictional design explorations, each with its own point of view. Find a direction that sparks your next project.",
+    "boardLabel": "THE CONCEPT INDEX",
+    "boardTitle": "Six ideas.<br><em>Infinite possibilities.</em>",
+    "primaryHref": "#concept-grid",
+    "primaryLabel": "Explore all concepts",
+    "secondaryHref": "/contact/",
+    "secondaryLabel": "Discuss your direction",
+    "footnote": "ILLUSTRATIVE WORK / REAL DESIGN THINKING",
+    "links": "concepts"
+  },
+  "about": {
+    "edition": "THE STUDIO / 01—03",
+    "kicker": "An independent creative direction",
+    "title": "A point<br><em>of view.</em><br>Not a trend.",
+    "description": "Explore the approach, principles and thoughtful decisions behind this standalone design showcase.",
+    "boardLabel": "INSIDE THE STUDIO",
+    "boardTitle": "What makes<br><em>it Softly?</em>",
+    "primaryHref": "#studio-story",
+    "primaryLabel": "Meet the studio",
+    "secondaryHref": "/design-system/",
+    "secondaryLabel": "See the visual system",
+    "footnote": "DESIGNED TO BE DISTINCT",
+    "links": [
+      [
+        "#studio-story",
+        "The story"
+      ],
+      [
+        "#studio-principles",
+        "Design principles"
+      ],
+      [
+        "#studio-language",
+        "One visual language"
+      ],
+      [
+        "/contact/",
+        "Start a conversation"
+      ]
+    ]
+  },
+  "process": {
+    "edition": "THE WORKFLOW / 01—06",
+    "kicker": "A considered creative process",
+    "title": "Start with<br><em>the why.</em><br>Then make.",
+    "description": "From the first conversation to careful delivery, every step has a purpose—and every decision has a reason.",
+    "boardLabel": "THE SIX-STEP METHOD",
+    "boardTitle": "From brief<br><em>to better.</em>",
+    "primaryHref": "#process-step-1",
+    "primaryLabel": "Explore the method",
+    "secondaryHref": "/contact/",
+    "secondaryLabel": "Start a project",
+    "footnote": "DISCOVER / DESIGN / DELIVER",
+    "links": [
+      [
+        "#process-step-1",
+        "Discover the problem"
+      ],
+      [
+        "#process-step-2",
+        "Define the direction"
+      ],
+      [
+        "#process-step-3",
+        "Explore and prototype"
+      ],
+      [
+        "#process-step-4",
+        "Build the experience"
+      ],
+      [
+        "#process-step-5",
+        "Validate the details"
+      ],
+      [
+        "#process-step-6",
+        "Launch and improve"
+      ]
+    ]
+  },
+  "insights": {
+    "edition": "THE JOURNAL / 01—03",
+    "kicker": "Notes from the studio",
+    "title": "Thoughts<br><em>worth</em><br>exploring.",
+    "description": "Readable ideas about distinctive branding, better digital experiences, and technology that serves people.",
+    "boardLabel": "ON THE READING LIST",
+    "boardTitle": "Start with<br><em>a good question.</em>",
+    "primaryHref": "#article-search",
+    "primaryLabel": "Find a story",
+    "secondaryHref": "/about/",
+    "secondaryLabel": "Meet the studio",
+    "footnote": "ORIGINAL EDITORIAL NOTES",
+    "links": "articles"
+  },
+  "contact": {
+    "edition": "START A CONVERSATION",
+    "kicker": "Every good collaboration starts somewhere",
+    "title": "Have an<br><em>idea?</em><br>Let's talk.",
+    "description": "Share your project direction. Prepare a clear inquiry, then choose when to send it from your own email application.",
+    "boardLabel": "YOUR NEXT STEP",
+    "boardTitle": "Tell us<br><em>what's possible.</em>",
+    "primaryHref": "#project-form",
+    "primaryLabel": "Prepare your inquiry",
+    "secondaryHref": "mailto:admin@pincodeit.com?subject=Softly%20design%20inquiry",
+    "secondaryLabel": "Email directly",
+    "footnote": "A SHOWCASE / YOUR NEXT DIRECTION",
+    "links": [
+      [
+        "#project-form",
+        "Describe your project"
+      ],
+      [
+        "/work/",
+        "Browse design concepts"
+      ],
+      [
+        "/services/",
+        "Explore capabilities"
+      ],
+      [
+        "/process/",
+        "Understand the process"
+      ]
+    ]
+  },
+  "design-system": {
+    "edition": "THE STYLE GUIDE / 01—04",
+    "kicker": "The rules behind the experience",
+    "title": "Every<br><em>detail</em><br>matters.",
+    "description": "An inspectable collection of the colors, type choices, components and interactions that make Softly feel consistent.",
+    "boardLabel": "EXPLORE THE SYSTEM",
+    "boardTitle": "Built with<br><em>intention.</em>",
+    "primaryHref": "#design-color",
+    "primaryLabel": "Explore the palette",
+    "secondaryHref": "/work/",
+    "secondaryLabel": "See it in action",
+    "footnote": "A SYSTEM WITH CHARACTER",
+    "links": [
+      [
+        "#design-color",
+        "Color palette"
+      ],
+      [
+        "#design-type",
+        "Typography"
+      ],
+      [
+        "#design-actions",
+        "Buttons and actions"
+      ],
+      [
+        "#design-surfaces",
+        "Surfaces and cards"
+      ]
+    ]
+  },
+  "not-found": {
+    "edition": "404 / A WRONG TURN",
+    "kicker": "There's more to discover",
+    "title": "A wrong<br><em>turn?</em><br>Explore.",
+    "description": "This destination isn't here, but the ideas, design concepts and studio notes are all a click away.",
+    "boardLabel": "FIND YOUR WAY",
+    "boardTitle": "A better<br><em>next stop.</em>",
+    "primaryHref": "/",
+    "primaryLabel": "Return to the homepage",
+    "secondaryHref": "/work/",
+    "secondaryLabel": "Explore design concepts",
+    "footnote": "KEEP CREATING / KEEP EXPLORING",
+    "links": [
+      [
+        "/",
+        "The homepage"
+      ],
+      [
+        "/work/",
+        "The concept collection"
+      ],
+      [
+        "/services/",
+        "Our capabilities"
+      ],
+      [
+        "/contact/",
+        "Talk about a project"
+      ]
+    ]
+  },
+  "articleTitles": {
+    "brand-led-growth": "Brand-Led Growth Begins With Clarity",
+    "digital-experience": "The Small Decisions Behind Better Digital Experiences",
+    "automation-with-intent": "Build Automation Around People, Not Hype"
+  }
+}
