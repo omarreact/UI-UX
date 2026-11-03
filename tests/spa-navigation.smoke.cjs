@@ -21,7 +21,9 @@
         reducedMotion: "reduce"
       });
       const errors = [];
+      const fallbacks = [];
       page.on("pageerror", e => errors.push(e.message));
+      page.on("console", msg => { if (msg.text().includes("Softly SPA navigation fallback:")) fallbacks.push(msg.text()); });
       const route = async pathname => {
         await page.waitForFunction(expected =>
           location.pathname + location.search === expected &&
@@ -43,7 +45,7 @@
           eventCount: window.__softlyEvents || 0
         }));
         assert(data.sentinel === "unchanged-browser-document",
-          "A navigation unexpectedly reloaded the document at " + width);
+          "A navigation unexpectedly reloaded the document at " + width + " route=" + page.url() + " fallback=" + fallbacks.join(" | "));
         assert(data.page === expectedPage,
           "Incorrect page state after client navigation: " + JSON.stringify(data));
         assert(new URL(data.canonical).pathname === new URL(page.url()).pathname,
