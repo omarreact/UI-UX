@@ -29,6 +29,27 @@
       });
       assert(d.scrollWidth<=d.viewport+1,route+" overflow at "+width+"px: "+d.scrollWidth+" > "+d.viewport+" culprits="+JSON.stringify(d.offenders));
       assert(d.h1===1&&d.nav&&d.main&&d.footer&&!d.duplicateIds,route+" missing shared semantic layout");
+
+      // Every page uses the same full-bleed CTA. The colored surface must
+      // touch both viewport edges, but its contents stay centered and readable.
+      const cta=await page.evaluate(()=>{
+        const section=document.querySelector(".final-cta");
+        const box=section?.querySelector(".cta-box");
+        const content=section?.querySelector(".cta-content");
+        if(!section||!box||!content)return null;
+        const outer=box.getBoundingClientRect(),inside=content.getBoundingClientRect();
+        return {left:outer.left,right:outer.right,width:outer.width,contentWidth:inside.width,
+          viewport:document.documentElement.clientWidth,
+          primary:!!content.querySelector('a[href="/contact/"]'),
+          secondary:!!content.querySelector('a[href="/work/"]')};
+      });
+      assert(cta!==null,route+" is missing the shared full-width CTA");
+      assert(Math.abs(cta.left)<=1 && Math.abs(cta.right-cta.viewport)<=1,
+        route+" CTA is not full bleed at "+width+"px: "+JSON.stringify(cta));
+      assert(cta.contentWidth<=Math.min(cta.viewport,1120)+1,
+        route+" CTA content is too wide at "+width+"px");
+      assert(cta.primary&&cta.secondary,route+" CTA links changed unexpectedly");
+
       if(width<=900){
        const menu=page.locator(".mobile-toggle");
        assert(await menu.evaluate(el=>el.getBoundingClientRect().height)>=44,"Mobile menu target too small");
