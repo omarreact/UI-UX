@@ -7,11 +7,24 @@
   const make=p=>fs.mkdirSync(p,{recursive:true});
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   fs.rmSync(dist,{recursive:true,force:true});
-  for(const folder of ["assets/images","assets/css","assets/js"])make(path.join(dist,folder));
+  for(const folder of ["assets/images","assets/css","assets/js","assets/brand"])make(path.join(dist,folder));
+  // Logo masters and brand standards live in this repository, never a CDN.
+  const brandFiles=["mark.svg","symbol-white.svg","logo-on-dark.svg",
+    "logo-on-light.svg","social-card.svg","app-icon.svg",
+    "pattern-tile.svg","tokens.json","BRAND-GUIDELINES.md"];
+  const rasterFiles=["social-card.png","icon-192.png","icon-512.png","apple-touch-icon.png"];
+  for(const name of brandFiles) {
+    fs.copyFileSync(path.join(root,"src/brand",name),path.join(dist,"assets/brand",name));
+  }
+  for(const name of rasterFiles) {
+    const source=path.join(root,"assets/brand",name);
+    if(!fs.existsSync(source))throw Error("Missing first-party PNG brand export: "+name);
+    fs.copyFileSync(source,path.join(dist,"assets/brand",name));
+  }
   const images=fs.readdirSync(path.join(root,"assets/images")).filter(x=>x.endsWith(".webp"));
   if(images.length!==13)throw Error("Expected 13 WebP photographs, found "+images.length);
   for(const image of images)fs.copyFileSync(path.join(root,"assets/images",image),path.join(dist,"assets/images",image));
-  for(const [source,target] of [["src/styles/site.css","assets/css/site.css"],["src/styles/pages.css","assets/css/pages.css"],["src/scripts/site.js","assets/js/site.js"],["src/scripts/router.js","assets/js/router.js"]])fs.copyFileSync(path.join(root,source),path.join(dist,target));
+  for(const [source,target] of [["src/styles/site.css","assets/css/site.css"],["src/styles/pages.css","assets/css/pages.css"],["src/styles/brand.css","assets/css/brand.css"],["src/scripts/site.js","assets/js/site.js"],["src/scripts/router.js","assets/js/router.js"]])fs.copyFileSync(path.join(root,source),path.join(dist,target));
   const layout=read("src/layout.html"),nav=read("src/partials/nav.html"),footer=read("src/partials/footer.html"),cta=read("src/partials/cta.html");
   const editorialTemplate=read("src/partials/hero-editorial.html"),heroPanels=JSON.parse(read("src/content/hero-panels.json"));
   const concepts=JSON.parse(read("src/content/concepts.json")),articles=JSON.parse(read("src/content/articles.json"));
@@ -25,7 +38,8 @@
     ["process","/process/","Process — Softly Solutions","Follow a practical six-step design and development workflow.","From question<br><em>to clarity.</em>","Approach / Process","A transparent process centered on user needs and deliberate choices."],
     ["insights","/insights/","Insights — Softly Solutions","Original notes on brand-led growth, better digital experiences, and thoughtful automation.","Ideas worth<br><em>reading.</em>","Journal / Insights","Thoughtful writing for building clearer digital experiences."],
     ["contact","/contact/","Contact — Softly Solutions","Prepare a design inquiry and contact the studio showcase team.","Let's make<br><em>something matter.</em>","Contact / Start a Project","Share your idea, the audience you serve, and the outcome that matters."],
-    ["design-system","/design-system/","Design System — Softly Solutions","Explore the palette, typography, interface components, and reusable design patterns.","One system.<br><em>Many expressions.</em>","Showcase / Design System","Explore the components and decisions behind the complete visual language."]
+    ["design-system","/design-system/","Design System — Softly Solutions","Explore the palette, typography, interface components, and reusable design patterns.","One system.<br><em>Many expressions.</em>","Showcase / Design System","Explore the components and decisions behind the complete visual language."],
+    ["brand","/brand/","Brand Guide — Softly Solutions","Discover the original Softly logo, brand standards, voice, palette, and downloadable identity assets.","Ideas with<br><em>intention.</em>","Showcase / Brand Guide","A complete independent identity, built with a warm visual language."]
   ].map(x=>({id:x[0],route:x[1],title:x[2],description:x[3],heroTitle:x[4],heroLabel:x[5],heroText:x[6],source:x[0]}));
   for(const x of concepts)configs.push({id:"work",route:x.url,title:x.name+" Concept — Softly Solutions",description:x.description,heroTitle:esc(x.name)+"<br><em>"+esc(x.subtitle)+"</em>",heroLabel:esc(x.eyebrow),heroText:"An original illustrative concept exploring a particular design challenge.",body:
     '<section class="page-section"><div class="wrap"><div class="reading-meta"><span>Illustrative concept</span><span>'+esc(x.category)+'</span></div><div class="detail-layout"><div class="detail-main"><img class="detail-image" src="/assets/images/'+esc(x.image)+'" alt="Visual inspiration for '+esc(x.name)+'" decoding="async"><span class="eyebrow-detail">The idea</span><h2>'+esc(x.subtitle)+'</h2><p class="article-intro">'+esc(x.description)+'</p><h2 id="concept-challenge">The challenge</h2><p>'+esc(x.challenge)+'</p><h2 id="concept-approach">The design approach</h2><p>'+esc(x.solution)+'</p><h2 id="concept-highlights">Experience highlights</h2><div class="detail-feature-grid">'+x.features.map((t,i)=>'<div class="detail-feature"><strong>0'+(i+1)+'</strong>'+esc(t)+'</div>').join("")+'</div><div class="aside-note"><strong>Independent concept</strong><span>This is a design exploration, not a commissioned project or verified business result.</span></div><div class="related-links"><a class="light-btn" href="/work/">← All concepts</a><a class="orange-btn" href="/contact/?service=Custom%20Design%20Concept">Request a similar direction ↗</a></div></div><aside class="detail-aside"><span>Concept overview</span><h3>'+esc(x.name)+'</h3><p>Designed for '+esc(x.audience)+'.</p><a class="orange-btn" href="/contact/?service=Custom%20Design%20Concept">Discuss this concept</a></aside></div></div></section>{{CTA}}'
@@ -119,8 +133,17 @@
     const target=p.route==="/"?path.join(dist,"index.html"):p.route==="/404.html"?path.join(dist,"404.html"):path.join(dist,p.route.slice(1),"index.html");
     make(path.dirname(target));fs.writeFileSync(target,html);
   }
+  fs.writeFileSync(path.join(dist,"manifest.webmanifest"),JSON.stringify({
+    name:"Softly Solutions — Design Showcase",
+    short_name:"Softly",description:"Ideas with intention. A distinctive design showcase.",
+    start_url:"/",scope:"/",display:"standalone",
+    background_color:"#F4F1EC",theme_color:"#120807",
+    icons:[{src:"/assets/brand/icon-192.png",sizes:"192x192",type:"image/png"},
+           {src:"/assets/brand/icon-512.png",sizes:"512x512",type:"image/png"}]
+  },null,2)+"\n");
+  require("./package-brand.cjs");
   fs.writeFileSync(path.join(dist,"robots.txt"),"User-agent: *\nAllow: /\nSitemap: https://agency.pincodeit.com/sitemap.xml\n");
   fs.writeFileSync(path.join(dist,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+configs.filter(x=>x.id!=="not-found").map(x=>'<url><loc>https://agency.pincodeit.com'+x.route+'</loc></url>').join("")+'</urlset>');
-  fs.writeFileSync(path.join(dist,"_headers"),["/*","  X-Content-Type-Options: nosniff","  Referrer-Policy: strict-origin-when-cross-origin","  X-Frame-Options: DENY","","/assets/css/*","  Cache-Control: public, max-age=300","","/assets/js/*","  Cache-Control: public, max-age=300","","/assets/images/*","  Cache-Control: public, max-age=86400",""].join("\n"));
+  fs.writeFileSync(path.join(dist,"_headers"),["/*","  X-Content-Type-Options: nosniff","  Referrer-Policy: strict-origin-when-cross-origin","  X-Frame-Options: DENY","","/assets/css/*","  Cache-Control: public, max-age=300","","/assets/js/*","  Cache-Control: public, max-age=300","","/assets/images/*","  Cache-Control: public, max-age=86400","","/assets/brand/*","  Cache-Control: public, max-age=86400",""].join("\n"));
   console.log("Built "+configs.length+" routes and "+images.length+" original first-party assets.");
 })();

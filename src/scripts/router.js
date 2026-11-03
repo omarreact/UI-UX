@@ -89,6 +89,8 @@ const headSelectors = [
   'meta[property="og:title"]',
   'meta[property="og:description"]',
   'meta[property="og:url"]',
+  'meta[name="twitter:title"]',
+  'meta[name="twitter:description"]',
   'link[rel="canonical"]'
 ];
 
@@ -174,6 +176,7 @@ async function navigate(url, mode = "push", state = null) {
       announcer.textContent = document.title + " loaded";
     });
   } catch (error) {
+    console.warn("Softly SPA navigation fallback:", url.pathname, error);
     if (requestId === navSequence) {
       // Never strand the visitor when client navigation fails.
       if (mode === "pop") location.replace(url.href);

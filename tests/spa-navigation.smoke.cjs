@@ -21,7 +21,9 @@
         reducedMotion: "reduce"
       });
       const errors = [];
+      const fallbacks = [];
       page.on("pageerror", e => errors.push(e.message));
+      page.on("console", msg => { if (msg.text().includes("Softly SPA navigation fallback:")) fallbacks.push(msg.text()); });
       const route = async pathname => {
         await page.waitForFunction(expected =>
           location.pathname + location.search === expected &&
@@ -43,7 +45,7 @@
           eventCount: window.__softlyEvents || 0
         }));
         assert(data.sentinel === "unchanged-browser-document",
-          "A navigation unexpectedly reloaded the document at " + width);
+          "A navigation unexpectedly reloaded the document at " + width + " route=" + page.url() + " fallback=" + fallbacks.join(" | "));
         assert(data.page === expectedPage,
           "Incorrect page state after client navigation: " + JSON.stringify(data));
         assert(new URL(data.canonical).pathname === new URL(page.url()).pathname,
@@ -112,6 +114,13 @@
           "Custom Design Concept", "Direct route query handling failed");
         assert(await page.evaluate(() => window.__softlySpaSentinel) === undefined,
           "Refresh did not produce a new browser document");
+        // A deliberate hard reload clears this test-only sentinel.
+        // Re-establish it before checking subsequent no-reload SPA transitions.
+        await page.evaluate(() => {
+          window.__softlySpaSentinel = "unchanged-browser-document";
+          window.__softlyEvents = 0;
+          document.addEventListener("site:navigated", () => { window.__softlyEvents++; });
+        });
 
         // A deep hash URL works when crossed from another SPA page.
         await clickWithoutScrolling('footer a[href="/services/#brand-strategy"]');
@@ -126,6 +135,20 @@
         }));
         assert(viewport.scroll <= viewport.width + 1, "SPA caused horizontal overflow");
 
+        // The new independent brand guide also participates in SPA transitions.
+        await clickWithoutScrolling('footer a[href="/brand/"]');
+        await route("/brand/");
+        await checkNoReload("brand");
+        assert(await page.locator(".brand-logo-panel img").count() === 2,
+          "Brand identity signatures missing after SPA navigation");
+        assert(await page.locator(".brand-color").count() === 6,
+          "Brand colors missing after SPA navigation");
+        await page.locator(".brand-color").first().click();
+        await page.waitForFunction(() =>
+          (document.querySelector("[data-color-status]")?.textContent || "").includes("#"));
+        const card=await page.request.get(base + "/assets/brand/social-card.png");
+        assert(card.status()===200, "Brand social PNG not available");
+        
         // A new visitor can open the direct route with no SPA navigation.
         const fresh = await browser.newPage();
         const direct = await fresh.goto(base + "/process/", { waitUntil: "load" });

@@ -194,5 +194,44 @@
     "brand-led-growth": "Brand-Led Growth Begins With Clarity",
     "digital-experience": "The Small Decisions Behind Better Digital Experiences",
     "automation-with-intent": "Build Automation Around People, Not Hype"
+  },
+  "brand": {
+    "edition": "SOFTLY / BRAND STANDARDS / 01—06",
+    "kicker": "A complete identity, built with intention",
+    "title": "A brand<br><em>with</em><br>purpose.",
+    "description": "Explore the mark, color, typography, writing principles and downloadable assets behind this original creative identity.",
+    "boardLabel": "THE BRAND SYSTEM",
+    "boardTitle": "Every detail<br><em>has a reason.</em>",
+    "primaryHref": "#brand-signature",
+    "primaryLabel": "Explore the logo",
+    "secondaryHref": "#brand-assets",
+    "secondaryLabel": "Download the brand kit",
+    "footnote": "IDEAS WITH INTENTION / BRAND STANDARDS",
+    "links": [
+      [
+        "#brand-identity",
+        "The idea"
+      ],
+      [
+        "#brand-signature",
+        "Logo signatures"
+      ],
+      [
+        "#brand-color",
+        "Color system"
+      ],
+      [
+        "#brand-type",
+        "Typography"
+      ],
+      [
+        "#brand-voice",
+        "Tone of voice"
+      ],
+      [
+        "#brand-assets",
+        "Brand downloads"
+      ]
+    ]
   }
 }

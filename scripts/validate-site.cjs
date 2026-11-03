@@ -8,10 +8,10 @@
   return fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?walk(path.join(dir,entry.name)):[path.join(dir,entry.name)]);
  }
  const files=walk(dist),htmlFiles=files.filter(x=>x.endsWith(".html"));
- assert(htmlFiles.length===18,"Expected 18 HTML routes (8 pages, 9 details, 404), got "+htmlFiles.length);
+ assert(htmlFiles.length===19,"Expected 19 HTML routes (9 pages, 9 details, 404), got "+htmlFiles.length);
  const scripts=fs.readFileSync(path.join(dist,"assets/js/site.js"),"utf8");
  try{new Function(scripts)}catch(e){throw Error("Invalid vanilla JavaScript syntax: "+e.message)}
- const cssFiles=["site.css","pages.css"];
+ const cssFiles=["site.css","pages.css","brand.css"];
  for(const file of cssFiles)assert(fs.existsSync(path.join(dist,"assets/css",file)),"Missing stylesheet "+file);
  const concepts=JSON.parse(fs.readFileSync(path.resolve(__dirname,"../src/content/concepts.json"),"utf8"));
  const articles=JSON.parse(fs.readFileSync(path.resolve(__dirname,"../src/content/articles.json"),"utf8"));
@@ -50,7 +50,29 @@
   for(const img of imgRefs)assert(fs.existsSync(path.join(dist,img.slice(1))),route+": missing image "+img);
   assert(/data-nav=/.test(html),route+": missing common navigation");
  }
- assert(paths.has("/work/")&&paths.has("/contact/")&&paths.has("/design-system/"),"Missing essential destination pages");
+ assert(paths.has("/work/")&&paths.has("/contact/")&&paths.has("/design-system/")&&paths.has("/brand/"),"Missing essential destination pages");
+ const requiredAssets=[
+   "mark.svg","symbol-white.svg","logo-on-dark.svg","logo-on-light.svg",
+   "social-card.svg","social-card.png","app-icon.svg","pattern-tile.svg",
+   "icon-192.png","icon-512.png","apple-touch-icon.png",
+   "tokens.json","BRAND-GUIDELINES.md","softly-brand-kit.zip"
+ ];
+ for(const file of requiredAssets)assert(fs.existsSync(path.join(dist,"assets/brand",file)),"Missing brand export "+file);
+ for(const route of paths){
+   const relative=route==="/"? "index.html":route==="/404.html"?"404.html":route.slice(1)+"index.html";
+   const html=fs.readFileSync(path.join(dist,relative),"utf8");
+   assert(html.includes('href="/assets/brand/mark.svg"'),route+": missing favicon");
+   assert(html.includes('https://agency.pincodeit.com/assets/brand/social-card.png'),route+": missing social preview");
+   assert(html.includes('href="/manifest.webmanifest"'),route+": missing app manifest");
+   assert(html.includes('href="/assets/css/brand.css"'),route+": missing brand styles");
+ }
+ const manifest=JSON.parse(fs.readFileSync(path.join(dist,"manifest.webmanifest"),"utf8"));
+ assert(manifest.short_name==="Softly"&&manifest.icons.length===2,"Invalid Softly app manifest");
+ const zip=fs.readFileSync(path.join(dist,"assets/brand/softly-brand-kit.zip"));
+ assert(zip.length>3000&&zip.readUInt32LE(0)===0x04034b50,"Invalid brand kit archive");
+ const social=fs.readFileSync(path.join(dist,"assets/brand/social-card.png"));
+ assert(social.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])),"Invalid social card PNG");
+ assert(social.readUInt32BE(16)===1200&&social.readUInt32BE(20)===630,"Invalid social card dimensions");
  for(const c of concepts)assert(paths.has(c.url),"Missing concept route "+c.url);
  for(const a of articles)assert(paths.has(a.url),"Missing article route "+a.url);
  assert(fs.existsSync(path.join(dist,"robots.txt"))&&fs.existsSync(path.join(dist,"sitemap.xml")),"Missing SEO files");
