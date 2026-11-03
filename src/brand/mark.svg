@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title">
-  <title id="title">Softly Solutions spark symbol</title>
-  <defs><linearGradient id="signal" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#FF954A"/><stop offset="1" stop-color="#FF6130"/></linearGradient></defs>
-  <rect width="256" height="256" rx="60" fill="url(#signal)"/>
-  <path d="M34 165C84 164 108 142 128 87C148 142 173 164 222 165C173 167 149 189 128 226C108 189 84 167 34 165Z" fill="#FFFFFF"/>
-  <path d="M39 71C73 70 87 54 96 23C105 54 119 70 153 71C119 72 105 86 96 108C87 86 73 72 39 71Z" fill="#FFF0E7" opacity=".88"/>
-  <circle cx="206" cy="58" r="6" fill="#FFFFFF" opacity=".8"/>
+<title id="title">Softly typographic S monogram</title>
+<defs><linearGradient id="signal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF954A"/><stop offset="1" stop-color="#FF6130"/></linearGradient></defs>
+<rect x="0" y="0" width="256" height="256" rx="57" fill="url(#signal)"/>
+<text x="54" y="190" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', serif" font-size="185" font-weight="700" letter-spacing="-7">S</text>
+<circle cx="187" cy="185" r="12" fill="#FFF8F0"/>
 </svg>
