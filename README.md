@@ -17,8 +17,9 @@ A standalone, responsive agency-style website demonstrating a complete reusable 
 | Insights | `/insights/` |
 | Contact | `/contact/` |
 | Design System | `/design-system/` |
+| Brand Guide | `/brand/` |
 
-Includes **six independent illustrative concept detail pages**, **three complete original article pages**, and a custom 404 page: **18 generated HTML routes** in total.
+Includes **six independent illustrative concept detail pages**, **three complete original article pages**, and a custom 404 page: **19 generated HTML routes** in total.
 
 ## Source structure
 
@@ -28,7 +29,8 @@ src/
   partials/                Navigation, footer, CTA, dialog, original hero
   pages/                   Each main page's content markup
   content/                 Independent portfolio concepts and articles (JSON)
-  styles/                  site.css + pages.css, both first-party
+  styles/                  site.css + pages.css + brand.css, all first-party
+  brand/                   Logo masters, social artwork, token JSON and brand standards
   scripts/                 site.js (page lifecycle) + router.js (native SPA)
 assets/images/             13 optimized, self-hosted WebP photographs
 scripts/
@@ -93,3 +95,13 @@ Deploy command: `npx --yes wrangler@4.148.0 deploy`.
 The GitHub Actions workflow executes Playwright responsive checks across **320, 375, 430, 768, 1024, and 1440px** on all primary pages, plus detail pages and main interactions. A separate SPA smoke suite verifies navigation without reloads, Back/Forward history, direct/reloaded URLs, query-specific contact forms, and the continued function of page controls. Before merging significant changes, confirm the pull request's checks pass.
 
 No credentials or API secrets belong in the repository. The root `index.html` is a compatibility redirect for former GitHub Pages visitors; generated HTML in `dist/` is the only production output.
+
+## Softly brand identity
+
+Softly is a **standalone design-showcase identity**. Its wordmark, two-spark icon, palette, voice, and social artwork are original to this repository; they do not import or imitate assets from another project.
+
+**Public brand guide:** [agency.pincodeit.com/brand/](https://agency.pincodeit.com/brand/)
+
+The complete first-party brand kit is generated during the static build at `/assets/brand/softly-brand-kit.zip`. It includes SVG logos for dark/light backgrounds, the spark mark, raster social and app icons, tokens JSON and written usage guidance. The original warm-espresso and orange design of the homepage is preserved.
+
+PNG exports are generated from the SVG masters with the repo's explicit `generate-brand-assets.yml` workflow and committed to `assets/brand/`. They are static assets, not a runtime CDN dependency. Do not remove the verified generated PNG exports before a production deployment.

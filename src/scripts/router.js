@@ -89,6 +89,8 @@ const headSelectors = [
   'meta[property="og:title"]',
   'meta[property="og:description"]',
   'meta[property="og:url"]',
+  'meta[name="twitter:title"]',
+  'meta[name="twitter:description"]',
   'link[rel="canonical"]'
 ];
 

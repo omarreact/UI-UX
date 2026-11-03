@@ -4,7 +4,7 @@
  const {chromium}=require("playwright");
  const {createSiteServer}=require("../scripts/dev-server.cjs");
  const sizes=[320,375,430,768,1024,1440];
- const destinations=["/","/services/","/work/","/about/","/process/","/insights/","/contact/","/design-system/"];
+ const destinations=["/","/services/","/work/","/about/","/process/","/insights/","/contact/","/design-system/","/brand/"];
  const assert=(state,message)=>{if(!state)throw Error(message)};
  (async()=>{
   const server=createSiteServer();
@@ -67,6 +67,17 @@
        const style=await nav.evaluate(el=>({decoration:getComputedStyle(el).textDecorationLine,color:getComputedStyle(el).color}));
        assert(style.decoration==="none"&&style.color!=="rgb(0, 0, 238)","Browser-default link styling detected on "+route);
       }
+      if(route==="/brand/"){
+        assert(await page.locator(".brand-guide-seal img").count()===1,"Missing original Softly spark");
+        assert(await page.locator(".brand-logo-panel img").count()===2,"Missing dual logo signatures");
+        assert(await page.locator(".brand-color").count()===6,"Incomplete color palette");
+        const brandLinks=page.locator(".editorial-showcase-hero .services-board-list a");
+        assert(await brandLinks.count()===6,"Brand guide navigation index missing");
+        const link=page.locator('a[href="/assets/brand/softly-brand-kit.zip"]').first();
+        assert(await link.count()===1,"Missing downloadable brand kit");
+        const svg=await page.request.get(base+"/assets/brand/logo-on-dark.svg");
+        assert(svg.status()===200,"First-party logo asset unavailable");
+      }
       if(route==="/services/"){
         const hero=page.locator(".services-showcase-hero");
         assert(await hero.count()===1, "Services page should have its own hero composition");
@@ -98,7 +109,7 @@
           "Homepage was changed by the editorial hero implementation");
       } else if(route!=="/services/"){
         const expected={"/work/":6,"/about/":4,"/process/":6,
-          "/insights/":3,"/contact/":4,"/design-system/":4}[route];
+          "/insights/":3,"/contact/":4,"/design-system/":4,"/brand/":6}[route];
         const hero=page.locator(".editorial-showcase-hero");
         assert(await hero.count()===1, "Shared editorial hero missing on "+route);
         const nav=page.locator(".editorial-showcase-hero .services-board-list a");

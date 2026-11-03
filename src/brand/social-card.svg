@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Softly Solutions social sharing artwork">
+<defs>
+  <linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#100605"/><stop offset=".6" stop-color="#27110C"/><stop offset="1" stop-color="#51251A"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#FF9555" stop-opacity=".34"/><stop offset="1" stop-color="#FF6B35" stop-opacity="0"/></radialGradient>
+  <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF954A"/><stop offset="1" stop-color="#FF6130"/></linearGradient>
+  <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse"><path d="M56 0H0V56" fill="none" stroke="#FFFFFF" stroke-opacity=".065"/></pattern>
+</defs>
+<rect width="1200" height="630" fill="url(#base)"/><rect width="1200" height="630" fill="url(#grid)"/>
+<circle cx="955" cy="335" r="370" fill="url(#glow)"/><circle cx="960" cy="302" r="250" fill="none" stroke="#FFD4BF" stroke-opacity=".16" stroke-width="2"/>
+<circle cx="960" cy="302" r="186" fill="none" stroke="#FFD4BF" stroke-opacity=".12" stroke-width="2"/>
+<g transform="translate(825 170)"><rect x="-10" y="-10" width="302" height="302" rx="69" fill="url(#orange)" transform="rotate(9 141 141)"/><path d="M25 183C85 179 112 152 139 80C167 152 199 179 258 183C199 187 166 219 139 265C113 219 85 187 25 183Z" fill="#FFFFFF"/><path d="M33 68C73 67 94 48 105 11C117 48 135 67 176 68C135 69 117 87 105 113C94 87 73 69 33 68Z" fill="#FFF2E9" opacity=".89"/></g>
+<rect x="63" y="58" width="48" height="48" rx="12" fill="url(#orange)"/><path d="M69 90C78 89 84 84 87 74C90 84 97 89 106 90C97 91 90 97 87 103C84 97 78 91 69 90Z" fill="white"/>
+<text x="127" y="89" fill="#FFF9F4" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="34">Softly</text>
+<text x="128" y="106" fill="#D9BCAE" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="12" letter-spacing="6">SOLUTIONS</text>
+<text x="63" y="197" fill="#FFC0A0" font-family="Arial,Helvetica,sans-serif" font-size="15" letter-spacing="4" font-weight="700">AN INDEPENDENT DESIGN SHOWCASE</text>
+<text x="57" y="306" fill="#FFF9F4" font-family="Georgia,serif" font-size="85" letter-spacing="-4">Ideas with</text>
+<text x="57" y="399" fill="#FF9556" font-family="Georgia,serif" font-style="italic" font-size="92" letter-spacing="-5">intention.</text>
+<text x="63" y="459" fill="#D8B9A8" font-family="Arial,Helvetica,sans-serif" font-size="23">Smarter digital. Stronger brands.</text>
+<line x1="63" y1="532" x2="1136" y2="532" stroke="#FFFFFF" stroke-opacity=".22"/>
+<text x="63" y="568" fill="#DAC5B9" font-family="Arial,Helvetica,sans-serif" font-size="16" letter-spacing="3">STRATEGY / DESIGN / DIGITAL EXPERIENCES</text>
+<text x="914" y="568" fill="#FFC5A6" font-family="Arial,Helvetica,sans-serif" font-size="16">SOFTLY® / CONCEPT 01</text>
+</svg>

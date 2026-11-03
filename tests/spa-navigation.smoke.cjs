@@ -126,6 +126,20 @@
         }));
         assert(viewport.scroll <= viewport.width + 1, "SPA caused horizontal overflow");
 
+        // The new independent brand guide also participates in SPA transitions.
+        await clickWithoutScrolling('footer a[href="/brand/"]');
+        await route("/brand/");
+        await checkNoReload("brand");
+        assert(await page.locator(".brand-logo-panel img").count() === 2,
+          "Brand identity signatures missing after SPA navigation");
+        assert(await page.locator(".brand-color").count() === 6,
+          "Brand colors missing after SPA navigation");
+        await page.locator(".brand-color").first().click();
+        await page.waitForFunction(() =>
+          (document.querySelector("[data-color-status]")?.textContent || "").includes("#"));
+        const card=await page.request.get(base + "/assets/brand/social-card.png");
+        assert(card.status()===200, "Brand social PNG not available");
+        
         // A new visitor can open the direct route with no SPA navigation.
         const fresh = await browser.newPage();
         const direct = await fresh.goto(base + "/process/", { waitUntil: "load" });
