@@ -52,6 +52,9 @@ jobs:
       - name: Test responsive layouts and interactions
         run: node tests/responsive-ui.smoke.cjs
 
+      - name: Test client-side SPA navigation and browser history
+        run: node tests/spa-navigation.smoke.cjs
+
       - name: Upload failure screenshots
         if: failure()
         uses: actions/upload-artifact@v4
