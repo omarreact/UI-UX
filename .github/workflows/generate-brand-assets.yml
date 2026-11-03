@@ -1,7 +1,7 @@
 name: Generate first-party brand raster assets
 on:
   push:
-    branches: [brand/softly-complete-identity]
+    branches: ["brand/**"]
     paths:
       - "src/brand/**"
       - ".github/workflows/generate-brand-assets.yml"
@@ -49,5 +49,5 @@ jobs:
           git add assets/brand/*.png
           if ! git diff --cached --quiet; then
             git commit -m "build: add optimized Softly brand PNG exports"
-            git push origin HEAD:brand/softly-complete-identity
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi

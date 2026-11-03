@@ -14,16 +14,17 @@
 
 **Personality:** thoughtful, warm, quietly confident, human, a little playful.
 
-## 02 · Logo and symbol
+## 02 · Typography-only logo
 
-The primary signature combines a soft-square orange signal mark and the two-spark emblem with the Softly / SOLUTIONS wordmark. The linked sparks represent an idea becoming clearer.
+The primary Softly Solutions signature is a **text-only wordmark**: "Softly." set in a high-contrast editorial serif with a warm orange final period, and a small spaced-out "SOLUTIONS" descriptor. It does **not** use a pictorial icon in the navigation, footer or horizontal logo exports.
 
-- Use `logo-on-dark.svg` on espresso or dark photographic backgrounds.
-- Use `logo-on-light.svg` on cream and white backgrounds.
-- Use `mark.svg` for favicon, compact navigation, avatars, and app icons.
-- Maintain at least one-quarter of the logo mark's width as clear space on all sides.
-- Keep the original proportions, colors and letter spacing. Never stretch, rotate, re-color or add outline effects.
-- Minimum digital logo width: 150 CSS px; compact mark minimum: 28 CSS px.
+- Use `logo-on-dark.svg` on espresso or other dark surfaces.
+- Use `logo-on-light.svg` on cream and white surfaces.
+- Use selectable HTML text in the website navigation and footer (not a rasterized logo).
+- At small square sizes only, use `mark.svg`: a typographic **S.** lettermark on an orange field, for browser tabs, app icons and avatars.
+- Maintain at least the cap height of the descriptor as clear space around the full wordmark.
+- Never distort, stretch, rotate, outline, or recolor the signature. Keep the orange period and the original text relationship.
+- Minimum digital full wordmark width: 140 CSS px. Square lettermark minimum: 28 CSS px.
 
 ## 03 · Color
 
@@ -48,7 +49,7 @@ Use pale text on Night, Ink on Paper, and white on orange when sufficient contra
 
 ## 05 · Shape and motion
 
-Large soft-corner sections contrast with compact expressive pills. The spark motif appears sparingly as a focal visual, never as a repeated distracting pattern. Use warm shadowing, slow dimensional hover movement and reduced-motion fallbacks.
+Large soft-corner sections contrast with compact expressive pills. The enlarged typographic S. motif may appear sparingly as a focal visual, never as a distracting pattern. Use warm shadowing, slow dimensional hover movement and reduced-motion fallbacks.
 
 ## 06 · Voice and editorial rules
 
@@ -58,10 +59,10 @@ Large soft-corner sections contrast with compact expressive pills. The spark mot
 
 ## 07 · Social and digital
 
-Social sharing preview: `social-card.png`, 1200 × 630. Avatar and application icon use the spark. `manifest.webmanifest` and touch icons should resolve to first-party assets.
+Social sharing preview: `social-card.png`, 1200 × 630. Avatar and application icon use the typographic S. lettermark. `manifest.webmanifest` and touch icons should resolve to first-party assets.
 
 ## 08 · Implementation
 
-All assets originate in `src/brand/`; the site generator copies them to `dist/assets/brand/`. The `/brand/` website page is the public, interactive brand reference. The package contains vector logos, a social card, icons, token JSON, and this guide.
+All assets originate in `src/brand/`; the site generator copies them to `dist/assets/brand/`. The `/brand/` website page is the public, interactive brand reference. The package contains vector text logos, the typographic lettermark, a social card, icons, token JSON, and this guide.
 
 © 2026 Softly Solutions design showcase. Creative direction only; no trademark or domain registration is represented or implied.

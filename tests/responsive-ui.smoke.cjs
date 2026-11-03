@@ -67,6 +67,16 @@
        const style=await nav.evaluate(el=>({decoration:getComputedStyle(el).textDecorationLine,color:getComputedStyle(el).color}));
        assert(style.decoration==="none"&&style.color!=="rgb(0, 0, 238)","Browser-default link styling detected on "+route);
       }
+      // All routes must render an actual text wordmark in both shared regions.
+      const logos=await page.evaluate(()=>({
+        header:document.querySelector('.top-shell .brand--wordmark .brand-wordmark')?.textContent.trim(),
+        footer:document.querySelector('footer .brand--wordmark .brand-wordmark')?.textContent.trim(),
+        icons:[...document.querySelectorAll('.top-shell .brand,footer .brand')]
+          .flatMap(el=>[...el.querySelectorAll('img,svg')]).length
+      }));
+      assert(logos.header==="Softly."&&logos.footer==="Softly.",
+        route+" is missing the typography-only logo at "+width+"px");
+      assert(logos.icons===0,route+" still contains a pictorial logo at "+width+"px");
       if(route==="/brand/"){
         assert(await page.locator(".brand-guide-seal img").count()===1,"Missing original Softly spark");
         assert(await page.locator(".brand-logo-panel img").count()===2,"Missing dual logo signatures");

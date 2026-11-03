@@ -70,3 +70,18 @@
 @media(max-width:900px){.brand-palette-grid{grid-template-columns:repeat(3,minmax(0,1fr));}.brand-color>span{height:100px;}}
 @media(max-width:650px){.brand-guide-intro-grid,.brand-logo-grid,.brand-type-grid,.brand-resources-grid{grid-template-columns:1fr;}.brand-voice-grid{grid-template-columns:1fr;}.brand-guide-seal{min-height:310px;}.brand-logo-panel{min-height:235px;}.brand-color>span{height:78px;}.brand-guide-intro{padding-top:65px;}}
 @media(max-width:360px){.brand-palette-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.brand-mark-rule>div{flex-wrap:wrap;}.brand-color>span{height:100px;}}
+
+
+/* Text-only Softly identity — no pictorial logo, preserving all page compositions. */
+.brand.brand--wordmark{display:inline-flex;min-width:max-content;align-items:center;gap:0;text-decoration:none;}
+.brand.brand--wordmark .brand-lockup{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;gap:0;}
+.brand.brand--wordmark .brand-wordmark{display:block;color:#FFFAF4;font:700 29px/.89 Georgia,"Times New Roman",serif;letter-spacing:-.085em;white-space:nowrap;}
+.brand.brand--wordmark .brand-period{display:inline;color:#FF8A4B;font:inherit;letter-spacing:-.04em;}
+.brand.brand--wordmark .brand-descriptor{display:block;color:#D3B9AC;font:800 7px/1.25 Arial,Helvetica,sans-serif;letter-spacing:.29em;margin:6px 0 0 3px;white-space:nowrap;}
+footer .brand.brand--wordmark .brand-wordmark{color:#211915;font-size:31px;}
+footer .brand.brand--wordmark .brand-descriptor{color:#756256;}
+.brand-guide-seal .brand-seal-wordmark{width:min(310px,86%);max-width:100%;height:auto;filter:drop-shadow(0 15px 22px rgba(0,0,0,.19));}
+@media(max-width:360px){
+ .top-shell .brand.brand--wordmark .brand-wordmark{font-size:25px;}
+ .top-shell .brand.brand--wordmark .brand-descriptor{font-size:6px;}
+}

@@ -105,3 +105,7 @@ Softly is a **standalone design-showcase identity**. Its wordmark, two-spark ico
 The complete first-party brand kit is generated during the static build at `/assets/brand/softly-brand-kit.zip`. It includes SVG logos for dark/light backgrounds, the spark mark, raster social and app icons, tokens JSON and written usage guidance. The original warm-espresso and orange design of the homepage is preserved.
 
 PNG exports are generated from the SVG masters with the repo's explicit `generate-brand-assets.yml` workflow and committed to `assets/brand/`. They are static assets, not a runtime CDN dependency. Do not remove the verified generated PNG exports before a production deployment.
+
+## Typography-only logo refresh
+
+The global nav and footer use selectable **Softly. / SOLUTIONS** typography instead of a spark pictogram. Horizontal light/dark logo SVGs use the same text signature with an orange final period. Favicon, app icons and sharing art use letterform-only **S.** typography. No image-generation dependency or frontend font CDN is required.
