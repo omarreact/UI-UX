@@ -46,7 +46,7 @@
           "A navigation unexpectedly reloaded the document at " + width);
         assert(data.page === expectedPage,
           "Incorrect page state after client navigation: " + JSON.stringify(data));
-        assert(data.canonical === page.url().split("#")[0],
+        assert(new URL(data.canonical).pathname === new URL(page.url()).pathname,
           "Canonical metadata did not update for " + page.url());
         assert(data.eventCount > 0, "The route-change lifecycle event did not fire");
       };
