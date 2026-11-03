@@ -1,3 +1,12 @@
+/**
+ * Page-scoped behavior initialized on initial load and after a SPA route swap.
+ * Global listeners are aborted between routes to avoid duplicated handlers.
+ */
+let pageController = null;
+function initializePage() {
+  pageController?.abort();
+  pageController = new AbortController();
+  const { signal } = pageController;
 const mobileToggle = document.querySelector('.mobile-toggle');
         const mobileLinks = document.querySelector('#primary-navigation');
         if (mobileToggle && mobileLinks) {
@@ -12,9 +21,9 @@ const mobileToggle = document.querySelector('.mobile-toggle');
                 mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
             });
             mobileLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-            document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
-            document.addEventListener('click', event => { if (!mobileToggle.contains(event.target) && !mobileLinks.contains(event.target)) closeMenu(); });
-            window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
+            document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); }, { signal });
+            document.addEventListener('click', event => { if (!mobileToggle.contains(event.target) && !mobileLinks.contains(event.target)) closeMenu(); }, { signal });
+            window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); }, { signal });
         }
 
         // A small progress cue and return-to-top affordance for the long landing page.
@@ -29,8 +38,8 @@ const mobileToggle = document.querySelector('.mobile-toggle');
         };
         window.addEventListener('scroll', () => {
             if (!scrollFrame) { scrollFrame = true; window.requestAnimationFrame(updateScrollUI); }
-        }, {passive: true});
-        window.addEventListener('resize', updateScrollUI);
+        }, {passive: true, signal});
+        window.addEventListener('resize', updateScrollUI, { signal });
         updateScrollUI();
 
         // FAQ: connect buttons and answer regions for screen readers; avoid clipped answers.
@@ -65,7 +74,7 @@ const mobileToggle = document.querySelector('.mobile-toggle');
                         btn.closest('.acc-item').querySelector('.acc-content').scrollHeight + 'px';
                 }
             });
-        });
+        }, { signal });
 // Shared, accessible page interactions — no third-party frontend runtime.
 const conceptFilterButtons = Array.from(document.querySelectorAll("[data-filter]"));
 const conceptCards = Array.from(document.querySelectorAll(".showcase-card[data-category]"));
@@ -175,3 +184,7 @@ document.querySelectorAll("[data-copy-color]").forEach(button => {
         }
     });
 });
+
+}
+document.addEventListener("site:navigated", initializePage);
+initializePage();
