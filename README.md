@@ -29,7 +29,7 @@ src/
   pages/                   Each main page's content markup
   content/                 Independent portfolio concepts and articles (JSON)
   styles/                  site.css + pages.css, both first-party
-  scripts/                 site.js, progressive enhancement (ES6+)
+  scripts/                 site.js (page lifecycle) + router.js (native SPA)
 assets/images/             13 optimized, self-hosted WebP photographs
 scripts/
   build-static.cjs         Dependency-free static page generator
@@ -40,7 +40,20 @@ wrangler.jsonc             Cloudflare Workers Static Assets configuration
 dist/                      Generated output, not committed
 ```
 
-The original homepage's visual identity was preserved and extended across every destination. Shared header, footer, CTA, metadata, and page layouts are generated at build time, ensuring that navigation is available even when JavaScript is disabled. Dynamic interactions use standard browser APIs only.
+The original homepage's visual identity was preserved and extended across every destination. Shared header, footer, CTA, metadata, and page layouts are generated at build time. The native SPA router progressively enhances those pages with fast, history-aware navigation, while **every route still works as plain HTML when JavaScript is unavailable**.
+
+## Native SPA navigation (no React or Next.js)
+
+The site behaves like a single-page application for internal links while remaining a fully static, independently accessible multi-page website.
+
+- `src/scripts/router.js` intercepts eligible, same-origin internal links. It fetches the destination HTML, replaces the shared page regions and updates the document title, canonical URL, description and Open Graph metadata **without a full browser reload**.
+- HTML is still pre-rendered in `dist/`: a first-time direct visit, refresh, search crawler, browser without JavaScript, or a failed client-side fetch receives the normal full page.
+- Browser Back and Forward use the History API. The router retains in-memory scroll positions and supports deep-link anchors and query parameters.
+- A small bounded prefetch cache warms pages on hover/focus when data-saver settings permit. No SPA framework or frontend CDN is loaded.
+- `src/scripts/site.js` re-initializes interactive controls whenever a new page is displayed. Global handlers are automatically cleaned up between routes.
+- Keyboard users receive a focused main landmark after navigation, and assistive technology receives a nonvisual route announcement.
+
+**Scope:** The website is an SEO-friendly static site with native SPA transitions. It does not claim Next.js server rendering, React Server Components, account authentication, databases, or dynamic backend functionality.
 
 ## Run locally
 
@@ -77,6 +90,6 @@ node scripts/build-static.cjs && node scripts/validate-site.cjs
 
 Deploy command: `npx --yes wrangler@4.148.0 deploy`.
 
-The GitHub Actions workflow also executes Playwright browser checks across **320, 375, 430, 768, 1024, and 1440px** on all primary pages, plus the detail pages and main interactions. Before merging significant changes, confirm the pull request's checks pass.
+The GitHub Actions workflow executes Playwright responsive checks across **320, 375, 430, 768, 1024, and 1440px** on all primary pages, plus detail pages and main interactions. A separate SPA smoke suite verifies navigation without reloads, Back/Forward history, direct/reloaded URLs, query-specific contact forms, and the continued function of page controls. Before merging significant changes, confirm the pull request's checks pass.
 
 No credentials or API secrets belong in the repository. The root `index.html` is a compatibility redirect for former GitHub Pages visitors; generated HTML in `dist/` is the only production output.

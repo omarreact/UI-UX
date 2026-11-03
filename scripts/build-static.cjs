@@ -11,7 +11,7 @@
   const images=fs.readdirSync(path.join(root,"assets/images")).filter(x=>x.endsWith(".webp"));
   if(images.length!==13)throw Error("Expected 13 WebP photographs, found "+images.length);
   for(const image of images)fs.copyFileSync(path.join(root,"assets/images",image),path.join(dist,"assets/images",image));
-  for(const [source,target] of [["src/styles/site.css","assets/css/site.css"],["src/styles/pages.css","assets/css/pages.css"],["src/scripts/site.js","assets/js/site.js"]])fs.copyFileSync(path.join(root,source),path.join(dist,target));
+  for(const [source,target] of [["src/styles/site.css","assets/css/site.css"],["src/styles/pages.css","assets/css/pages.css"],["src/scripts/site.js","assets/js/site.js"],["src/scripts/router.js","assets/js/router.js"]])fs.copyFileSync(path.join(root,source),path.join(dist,target));
   const layout=read("src/layout.html"),nav=read("src/partials/nav.html"),footer=read("src/partials/footer.html"),cta=read("src/partials/cta.html");
   const editorialTemplate=read("src/partials/hero-editorial.html"),heroPanels=JSON.parse(read("src/content/hero-panels.json"));
   const concepts=JSON.parse(read("src/content/concepts.json")),articles=JSON.parse(read("src/content/articles.json"));
