@@ -486,3 +486,37 @@ body:not([data-page="home"]) :is(#studio-story,#studio-principles,#studio-langua
   .hero.hero-inner.hero-editorial .editorial-showcase--detail .services-showcase-message h1 {font-size:40px;}
   .hero.hero-inner.hero-editorial .editorial-showcase--article .services-showcase-message h1 {font-size:32px;}
 }
+
+
+/* Shared end-of-page CTA: full-bleed color surface, contained editorial content.
+   Applies consistently to all routes; no homepage hero or page sections are altered. */
+.final-cta {
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+.final-cta .cta-box {
+  box-sizing:border-box;
+  width:100%;
+  max-width:none;
+  margin:0;
+  border-radius:0;
+  padding:clamp(70px,8vw,116px) clamp(18px,3vw,48px);
+  box-shadow:none;
+}
+.final-cta .cta-content {
+  width:100%;
+  max-width:1120px;
+  margin-inline:auto;
+  min-width:0;
+}
+.final-cta .cta-content .section-title {text-wrap:balance;}
+@media (max-width:600px) {
+  .final-cta .cta-box {
+    padding:clamp(58px,13vw,82px) 18px;
+  }
+  .final-cta .cta-actions a {
+    min-height:44px;
+  }
+}
