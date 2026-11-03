@@ -114,6 +114,13 @@
           "Custom Design Concept", "Direct route query handling failed");
         assert(await page.evaluate(() => window.__softlySpaSentinel) === undefined,
           "Refresh did not produce a new browser document");
+        // A deliberate hard reload clears this test-only sentinel.
+        // Re-establish it before checking subsequent no-reload SPA transitions.
+        await page.evaluate(() => {
+          window.__softlySpaSentinel = "unchanged-browser-document";
+          window.__softlyEvents = 0;
+          document.addEventListener("site:navigated", () => { window.__softlyEvents++; });
+        });
 
         // A deep hash URL works when crossed from another SPA page.
         await clickWithoutScrolling('footer a[href="/services/#brand-strategy"]');
