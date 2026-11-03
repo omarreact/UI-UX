@@ -67,6 +67,34 @@
         assert(await page.locator(".services-showcase-primary").getAttribute("href")==="#service-overview",
           "Services main CTA does not target service cards");
       }
+      // Every inner page other than Services uses the same data-driven
+      // split editorial component with destination-specific navigation.
+      if(route==="/"){
+        assert(await page.locator(".editorial-showcase-hero").count()===0,
+          "Homepage was changed by the editorial hero implementation");
+      } else if(route!=="/services/"){
+        const expected={"/work/":6,"/about/":4,"/process/":6,
+          "/insights/":3,"/contact/":4,"/design-system/":4}[route];
+        const hero=page.locator(".editorial-showcase-hero");
+        assert(await hero.count()===1, "Shared editorial hero missing on "+route);
+        const nav=page.locator(".editorial-showcase-hero .services-board-list a");
+        assert(await nav.count()===expected,
+          "Incorrect number of contextual hero links on "+route);
+        const result=await page.evaluate(()=>{
+          const panel=document.querySelector(".editorial-showcase-hero");
+          const list=[...panel.querySelectorAll(".services-board-list a")];
+          return {display:getComputedStyle(panel).display,
+            oldCircle:getComputedStyle(document.querySelector(".hero.hero-inner"),"::after").display,
+            validLinks:list.every(a=>{
+              const href=a.getAttribute("href");
+              return href && (!href.startsWith("#")||!!document.getElementById(href.slice(1)));
+            })};
+        });
+        assert(result.validLinks, "Dead in-page hero anchor on "+route);
+        assert(result.oldCircle==="none", "Old decorative circles still visible on "+route);
+        assert(result.display===(width<=760?"flex":"grid"),
+          "Editorial hero responsive layout wrong on "+route);
+      }
       if(route==="/work/" && (width===375||width===1440)){
        const chips=page.locator("[data-filter]");
        await chips.filter({hasText:"Brand & Editorial"}).click();
@@ -111,6 +139,17 @@
        assert(r.status()===200,route+" does not load");
        const dims=await page.evaluate(()=>({cw:document.documentElement.clientWidth,sw:document.documentElement.scrollWidth,title:document.querySelectorAll("h1").length}));
        assert(dims.sw<=dims.cw+1&&dims.title===1,"Detail page layout problem on "+route+" at "+width);
+       const editorial=page.locator(".editorial-showcase-hero");
+       assert(await editorial.count()===1, "Missing editorial detail hero on "+route);
+       const links=await page.locator(".editorial-showcase-hero .services-board-list a").evaluateAll(anchors=>
+         anchors.map(a=>a.getAttribute("href")));
+       assert(links.length>=4, "Missing detail navigation links on "+route);
+       assert(await page.evaluate(()=>
+         [...document.querySelectorAll(".editorial-showcase-hero .services-board-list a")].every(a=>
+           !a.getAttribute("href").startsWith("#") ||
+           !!document.getElementById(a.getAttribute("href").slice(1))
+         )), "Unresolved detail anchors on "+route);
+
        checks++;
       }
      }
